@@ -24,4 +24,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "Vaultk"
 include(":app")
- 
+include(":ui")
+include(":domain")
+include(":data")
+include(":uicompose")

@@ -1,0 +1,8 @@
+<resources>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="hotel">Hotel</string>
+    <string name="apartment">Apartment</string>
+    <string name="home_welcome">Bentornato,</string>
+    <string name="home_title">Trova il tuo alloggio</string>
+    <string name="home_empty_list">Nessun hotel trovato per questa ricerca.</string>
+</resources>
