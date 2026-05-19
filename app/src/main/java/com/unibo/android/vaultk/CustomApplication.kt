@@ -1,4 +1,4 @@
-package com.unibo.android.corsolp2526
+package com.unibo.android.vaultk
 
 import android.app.Application
 import com.unibo.android.data.di.RepositoryProviderImpl

@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.unibo.android.corsolp2526"
+    namespace = "com.unibo.android.vaultk"
     compileSdk {
         version = release(36) {
             minorApiLevel = 1

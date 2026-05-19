@@ -1,4 +1,4 @@
-package com.unibo.android.corsolp2526
+package com.unibo.android.vaultk
 
 import org.junit.Test
 
