@@ -14,10 +14,11 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:supportsRtl="true"
+        android:theme="@style/Theme.VaultK"
         >
 
         <activity
-            android:name="com.unibo.android.uicompose.MainActivity"
+            android:name="com.unibo.android.ui.MainActivity"
             android:exported="true"
             >
 
