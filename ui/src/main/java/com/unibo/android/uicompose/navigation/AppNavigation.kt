@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.unibo.android.uicompose.login.LoginScreen
+import com.unibo.android.uicompose.navigation.Routes
 
 
 // import com.unibo.android.vaultk.ui.login.LoginScreen
@@ -22,35 +23,24 @@ fun AppNavigation() {
 
     NavHost(
         navController = navController,
-        startDestination = "splash"
+        startDestination = Routes.SPLASH
     ) {
 
-        composable("splash") {
-
+        composable(Routes.SPLASH) {
             SplashScreen(
                 onTimeout = {
-                    navController.navigate("login")
+                    navController.navigate(Routes.LOGIN)
                 }
             )
 
         }
 
-        composable("login") {
+        composable(Routes.LOGIN) {
             LoginScreen(
                 onReturn = {
-                    navController.navigate("splash")
+                    navController.navigate(Routes.SPLASH)
                 }
             )
         }
-
-        /**
-        composable("login") {
-            LoginScreen()
-        }
-
-        composable("vault") {
-            VaultScreen()
-        }
-        */
     }
 }
