@@ -36,11 +36,7 @@ fun AppNavigation() {
         }
 
         composable(Routes.LOGIN) {
-            LoginScreen(
-                onReturn = {
-                    navController.navigate(Routes.SPLASH)
-                }
-            )
+            LoginScreen(navController)
         }
     }
 }
