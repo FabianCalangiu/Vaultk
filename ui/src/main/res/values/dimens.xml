@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="spacing_m">8dp</dimen>
-    <dimen name="spacing_s">16dp</dimen>
-    <dimen name="spacing_l">24dp</dimen>
-    <dimen name="spacing_xl">48dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
-    <dimen name="txt_size_large">32sp</dimen>
+    <dimen name="spacing_xs">4dp</dimen>
+    <dimen name="spacing_small">8dp</dimen>
+    <dimen name="spacing_medium">16dp</dimen>
+    <dimen name="spacing_large">24dp</dimen>
+    <dimen name="spacing_xl">32dp</dimen>
 </resources>

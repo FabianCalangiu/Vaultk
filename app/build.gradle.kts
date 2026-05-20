@@ -41,7 +41,6 @@ android {
 
 dependencies {
     implementation(project(":ui"))
-    implementation(project(":uicompose"))
     implementation(project(":domain"))
     implementation(project(":data"))
 
