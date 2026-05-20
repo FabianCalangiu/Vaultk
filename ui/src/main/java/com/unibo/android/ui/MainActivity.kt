@@ -1,11 +1,11 @@
-package com.unibo.android.uicompose
+package com.unibo.android.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.unibo.android.vaultk.ui.navigation.AppNavigation
-import com.unibo.android.uicompose.ui.theme.VaultkTheme
+import com.unibo.android.ui.ui.theme.VaultkTheme
 
 class MainActivity : ComponentActivity() {
 

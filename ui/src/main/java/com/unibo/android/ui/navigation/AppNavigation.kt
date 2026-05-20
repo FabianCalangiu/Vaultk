@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.unibo.android.uicompose.login.Form
-import com.unibo.android.uicompose.login.LoginScreen
+import com.unibo.android.ui.login.Form
+import com.unibo.android.ui.login.LoginScreen
 import com.unibo.android.uicompose.navigation.Routes
 
 
@@ -30,7 +30,7 @@ fun AppNavigation() {
         composable(Routes.SPLASH) {
             SplashScreen(
                 onTimeout = {
-                    navController.navigate(Routes.FORM)
+                    navController.navigate(Routes.LOGIN)
                 }
             )
 
@@ -39,5 +39,9 @@ fun AppNavigation() {
         composable(Routes.FORM) {
             Form()
         }
+
+//        composable(Routes.LOGIN) {
+//            LoginScreen(navController)
+//        }
     }
 }

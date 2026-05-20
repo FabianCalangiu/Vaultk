@@ -1,4 +1,4 @@
-package com.unibo.android.uicompose.login
+package com.unibo.android.ui.login
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
