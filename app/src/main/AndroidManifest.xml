@@ -14,12 +14,12 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CorsoLp2526">
+        >
 
         <activity
             android:name="com.unibo.android.uicompose.MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.CorsoLp2526" >
+            >
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
