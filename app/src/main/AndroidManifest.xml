@@ -8,18 +8,17 @@
 
     <application
         android:name="com.unibo.android.vaultk.CustomApplication"
+        android:label="Vaultk"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.CorsoLp2526">
 
         <activity
             android:name="com.unibo.android.uicompose.MainActivity"
             android:exported="true"
-            android:label="@string/title_activity_main"
             android:theme="@style/Theme.CorsoLp2526" >
 
             <intent-filter>
