@@ -4,6 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.unibo.android.uicompose.login.LoginScreen
+
 
 // import com.unibo.android.vaultk.ui.login.LoginScreen
 import com.unibo.android.vaultk.ui.splash.SplashScreen
@@ -28,6 +30,15 @@ fun AppNavigation() {
             SplashScreen(
                 onTimeout = {
                     navController.navigate("login")
+                }
+            )
+
+        }
+
+        composable("login") {
+            LoginScreen(
+                onReturn = {
+                    navController.navigate("splash")
                 }
             )
         }

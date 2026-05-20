@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.unibo.android.vaultk.ui.navigation.AppNavigation
-import com.unibo.android.uicompose.ui.theme.CorsoLp2526Theme
+import com.unibo.android.uicompose.ui.theme.VaultkTheme
 
 class MainActivity : ComponentActivity() {
 
@@ -15,7 +15,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            CorsoLp2526Theme {
+            VaultkTheme {
                 AppNavigation()
             }
         }
