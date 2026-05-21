@@ -11,6 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.sp
 import com.unibo.android.ui.theme.Header
 import com.unibo.android.ui.theme.TextPrimary
 
@@ -20,14 +23,16 @@ fun VaultHeader() {
         modifier = Modifier
             .fillMaxWidth()
             .background(Header)
-            .padding(20.dp),
+            .padding(20.dp, 40.dp, 20.dp, 10.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "VaultK",
-            color = TextPrimary,
-            style = MaterialTheme.typography.headlineMedium
+                text = "VaultK",
+                color = MaterialTheme.colorScheme.onBackground,
+                fontSize = 30.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Left,
         )
     }
 }
