@@ -1,4 +1,4 @@
-package com.unibo.android.uicompose.login
+package com.unibo.android.ui.register
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -30,8 +30,8 @@ fun onSubmit(username: String, password: String, navController: NavController) {
 }
 
 @Composable
-fun LoginCard(
-    navController: NavController,
+fun RegisterCard(
+    navController: NavController
 ) {
 
     var username by remember {
@@ -39,6 +39,10 @@ fun LoginCard(
     }
 
     var password by remember {
+        mutableStateOf("")
+    }
+
+    var confirmPassword by remember {
         mutableStateOf("")
     }
 
@@ -56,15 +60,15 @@ fun LoginCard(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                        text = "LOGIN"
-                    )
+                    text = "LOGIN",
+                    modifier = Modifier
+                        .clickable {
+                            navController.navigate(Routes.FORM_LOGIN)
+                        }
+                )
 
                 Text(
-                    text = "REGISTER",
-                    modifier = Modifier
-                        .clickable{
-                            navController.navigate(Routes.FORM_REGISTER)
-                        }
+                    text = "REGISTER"
                 )
             }
             OutlinedTextField(
@@ -90,10 +94,25 @@ fun LoginCard(
                 modifier = Modifier.fillMaxWidth()
             )
 
+            OutlinedTextField(
+                value = confirmPassword,
+                onValueChange = {
+                    confirmPassword = it
+                },
+                label = {
+                    Text("Confirm password")
+                },
+                visualTransformation = PasswordVisualTransformation(),
+                modifier = Modifier.fillMaxWidth()
+            )
+
             Button(
                 onClick = {
-                    if(username.isNotBlank() && password.isNotBlank()) {
-                        onSubmit(username, password, navController)
+                    if(username.isNotBlank() && password.isNotBlank() && confirmPassword.isNotBlank()) {
+                        if(password == confirmPassword) {
+                            onSubmit(username, password, navController)
+                        }
+
                     }
                 },
                 modifier = Modifier.fillMaxWidth()
