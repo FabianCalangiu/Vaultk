@@ -1,4 +1,4 @@
-package com.unibo.android.ui.ui.theme
+package com.unibo.android.ui.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
