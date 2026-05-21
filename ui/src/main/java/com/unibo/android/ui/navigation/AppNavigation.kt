@@ -30,14 +30,14 @@ fun AppNavigation() {
         composable(Routes.SPLASH) {
             SplashScreen(
                 onTimeout = {
-                    navController.navigate(Routes.LOGIN)
+                    navController.navigate(Routes.FORM)
                 }
             )
 
         }
 
         composable(Routes.FORM) {
-            Form()
+            Form(navController)
         }
 
 //        composable(Routes.LOGIN) {
