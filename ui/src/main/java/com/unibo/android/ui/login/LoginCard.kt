@@ -44,7 +44,7 @@ fun LoginCard(
                     username = it
                 },
                 label = {
-                    Text("Username")
+                    Text("Insert username")
                 },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -55,7 +55,7 @@ fun LoginCard(
                     password = it
                 },
                 label = {
-                    Text("Password")
+                    Text("Insert password")
                 },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -66,7 +66,7 @@ fun LoginCard(
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Invia")
+                Text("Submit")
             }
         }
     }
