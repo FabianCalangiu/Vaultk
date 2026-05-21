@@ -32,6 +32,11 @@ fun AppNavigation() {
             SplashScreen(
                 onTimeout = {
                     navController.navigate(Routes.FORM_LOGIN)
+                    navController.navigate(Routes.FORM) {
+                        popUpTo(Routes.SPLASH) {
+                            inclusive = true
+                        }
+                    }
                 }
             )
 

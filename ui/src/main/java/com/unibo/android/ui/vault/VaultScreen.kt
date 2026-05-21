@@ -1,12 +1,28 @@
 package com.unibo.android.ui.vault
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import com.unibo.android.ui.vault.VaultHeader
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun VaultScreen() {
-    Column() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+    ) {
         VaultHeader()
+
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) { }
     }
 }
