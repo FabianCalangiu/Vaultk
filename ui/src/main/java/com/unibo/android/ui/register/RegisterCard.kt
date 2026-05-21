@@ -58,11 +58,14 @@ fun RegisterCard(
             .background(MaterialTheme.colorScheme.surface)
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier
+                .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Row(
-                Modifier.fillMaxWidth().padding(15.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .padding(15.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
@@ -90,7 +93,8 @@ fun RegisterCard(
                 label = {
                     Text("Insert username")
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
             )
 
             OutlinedTextField(
@@ -102,7 +106,8 @@ fun RegisterCard(
                     Text("Insert password")
                 },
                 visualTransformation = PasswordVisualTransformation(),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
             )
 
             OutlinedTextField(
@@ -114,7 +119,8 @@ fun RegisterCard(
                     Text("Confirm password")
                 },
                 visualTransformation = PasswordVisualTransformation(),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
             )
 
             Button(
@@ -126,7 +132,8 @@ fun RegisterCard(
 
                     }
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
             ) {
                 Text("Submit")
             }
