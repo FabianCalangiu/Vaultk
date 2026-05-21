@@ -1,6 +1,5 @@
 package com.unibo.android.ui.login
 
-import android.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,9 +17,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.unibo.android.uicompose.login.LoginCard
 
 @Composable
-fun Form(navController: NavController) {
+fun FormLogin(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -49,7 +49,7 @@ fun Form(navController: NavController) {
                 .weight(1f),
             contentAlignment = Alignment.Center
         ) {
-            LoginScreen(navController)
+            LoginCard(navController,)
         }
     }
 }
