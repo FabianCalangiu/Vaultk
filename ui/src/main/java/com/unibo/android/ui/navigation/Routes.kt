@@ -4,6 +4,7 @@ object Routes {
     const val SPLASH = "splash"
     const val FORM_LOGIN = "form_login"
     const val FORM_REGISTER = "form_register"
-
     const val VAULT = "vault"
+
+    const val INSERT_NOTES = "inser_notes"
 }

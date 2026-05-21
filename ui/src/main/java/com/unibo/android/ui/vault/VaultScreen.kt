@@ -9,9 +9,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.unibo.android.uicompose.navigation.Routes
 
 @Composable
-fun VaultScreen() {
+fun VaultScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -29,7 +31,8 @@ fun VaultScreen() {
                 // Display entries
 
                 AddEntryCard(
-                    text = "New Entry"
+                    text = "New Entry",
+
                 ) { }
             }
 
@@ -39,8 +42,15 @@ fun VaultScreen() {
                 // Display entries
 
                 AddEntryCard(
-                    text = "New Secure Note"
-                ) { }
+                    text = "New Secure Note",
+                    {
+                        navController.navigate(Routes.INSERT_NOTES) {
+                            popUpTo(Routes.VAULT) {
+                                inclusive = true
+                            }
+                        }
+                    }
+                )
             }
         }
     }

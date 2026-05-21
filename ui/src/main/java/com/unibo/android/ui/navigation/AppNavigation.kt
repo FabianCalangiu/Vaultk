@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.unibo.android.ui.login.FormLogin
+import com.unibo.android.ui.notes.CreateNoteScreen
 import com.unibo.android.ui.register.FormRegister
 import com.unibo.android.ui.vault.VaultScreen
 import com.unibo.android.uicompose.navigation.Routes
@@ -16,7 +17,6 @@ import com.unibo.android.vaultk.ui.splash.SplashScreen
 
 /**
  * Navigation controller for the app. All destinations are defined here.
- *  **Please note that 'login' has yet not be defined since this commit, therefore the app will open briefly and close.**
  */
 @Composable
 fun AppNavigation() {
@@ -50,7 +50,12 @@ fun AppNavigation() {
         }
 
         composable(Routes.VAULT) {
-            VaultScreen()
+            VaultScreen(navController)
         }
+
+        composable(Routes.INSERT_NOTES) {
+            CreateNoteScreen()
+        }
+
     }
 }
