@@ -2,7 +2,6 @@ package com.unibo.android.ui.vault
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import com.unibo.android.ui.vault.VaultHeader
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -23,6 +22,26 @@ fun VaultScreen() {
         Column(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) { }
+        ) {
+            SectionCard(
+                title = "Accounts"
+            ) {
+                // Display entries
+
+                AddEntryCard(
+                    text = "New Entry"
+                ) { }
+            }
+
+            SectionCard(
+                title = "Notes"
+            ) {
+                // Display entries
+
+                AddEntryCard(
+                    text = "New Secure Note"
+                ) { }
+            }
+        }
     }
 }
