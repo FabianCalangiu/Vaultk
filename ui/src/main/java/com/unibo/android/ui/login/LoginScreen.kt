@@ -27,7 +27,11 @@ fun LoginScreen(
 
             // check if credentials are okay and then
 
-            navController.navigate(Routes.VAULT)
+            navController.navigate(Routes.VAULT) {
+                popUpTo(Routes.FORM) {
+                    inclusive = true
+                }
+            }
         }
     )
 }
