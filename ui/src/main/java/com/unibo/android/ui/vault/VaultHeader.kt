@@ -9,8 +9,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import com.unibo.android.ui.theme.Header
+import com.unibo.android.ui.theme.TextPrimary
 
 @Composable
 fun VaultHeader() {
@@ -22,6 +24,10 @@ fun VaultHeader() {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-
+        Text(
+            text = "VaultK",
+            color = TextPrimary,
+            style = MaterialTheme.typography.headlineMedium
+        )
     }
 }
