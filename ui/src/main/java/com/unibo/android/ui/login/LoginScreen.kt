@@ -27,7 +27,7 @@ fun LoginScreen(
 
             // check if credentials are okay and then
 
-            navController.navigate(Routes.SPLASH)
+            navController.navigate(Routes.VAULT)
         }
     )
 }

@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.unibo.android.ui.login.Form
 import com.unibo.android.ui.login.LoginScreen
+import com.unibo.android.ui.vault.VaultScreen
 import com.unibo.android.uicompose.navigation.Routes
 
 
@@ -43,5 +44,9 @@ fun AppNavigation() {
 //        composable(Routes.LOGIN) {
 //            LoginScreen(navController)
 //        }
+
+        composable(Routes.VAULT) {
+            VaultScreen()
+        }
     }
 }
