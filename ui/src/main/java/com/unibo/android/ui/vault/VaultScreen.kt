@@ -19,7 +19,7 @@ fun VaultScreen(navController: NavController) {
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
-        VaultHeader()
+        VaultHeader("VaultK")
 
         Column(
             modifier = Modifier

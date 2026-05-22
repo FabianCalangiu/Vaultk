@@ -18,7 +18,9 @@ import com.unibo.android.ui.theme.Header
 import com.unibo.android.ui.theme.TextPrimary
 
 @Composable
-fun VaultHeader() {
+fun VaultHeader(
+    title: String
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -28,7 +30,7 @@ fun VaultHeader() {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-                text = "VaultK",
+                text = title,
                 color = MaterialTheme.colorScheme.onBackground,
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,

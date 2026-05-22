@@ -19,7 +19,7 @@ fun FormRegister(navController: NavController) {
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
-        VaultHeader()
+        VaultHeader("Vaultk")
 
         Box(
             modifier = Modifier
