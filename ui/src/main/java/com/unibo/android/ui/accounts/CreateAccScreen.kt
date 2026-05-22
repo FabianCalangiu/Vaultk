@@ -12,10 +12,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import com.unibo.android.ui.common.Header
+import com.unibo.android.uicompose.navigation.Routes
 
 @Composable
-fun CreateAccScreen() {
+fun CreateAccScreen(navController: NavController) {
     var accountTitle by remember {
         mutableStateOf("")
     }
@@ -70,6 +72,7 @@ fun CreateAccScreen() {
             Button(
                 onClick = {
                     // Save note
+                    navController.navigate(Routes.PASSWORD_GENERATOR)
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
