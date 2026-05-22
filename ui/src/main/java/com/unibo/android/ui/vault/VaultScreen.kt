@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.unibo.android.ui.common.Header
 import com.unibo.android.uicompose.navigation.Routes
 
 @Composable
@@ -19,7 +20,7 @@ fun VaultScreen(navController: NavController) {
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
-        VaultHeader("VaultK")
+        Header("Vault")
 
         Column(
             modifier = Modifier
