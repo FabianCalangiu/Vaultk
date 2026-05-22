@@ -33,8 +33,10 @@ fun VaultScreen(navController: NavController) {
 
                 AddEntryCard(
                     text = "New Entry",
-
-                ) { }
+                    {
+                        navController.navigate(Routes.INSERT_ACCOUNTS)
+                    }
+                )
             }
 
             SectionCard(
@@ -45,11 +47,7 @@ fun VaultScreen(navController: NavController) {
                 AddEntryCard(
                     text = "New Secure Note",
                     {
-                        navController.navigate(Routes.INSERT_NOTES) {
-                            popUpTo(Routes.VAULT) {
-                                inclusive = true
-                            }
-                        }
+                        navController.navigate(Routes.INSERT_NOTES)
                     }
                 )
             }

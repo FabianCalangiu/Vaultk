@@ -7,4 +7,5 @@ object Routes {
     const val VAULT = "vault"
 
     const val INSERT_NOTES = "insert_notes"
+    const val INSERT_ACCOUNTS = "insert_accounts"
 }
