@@ -24,7 +24,6 @@ import com.unibo.android.ui.common.Header
 import com.unibo.android.uicompose.navigation.Routes
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import com.unibo.android.ui.common.Header
 import com.unibo.android.ui.theme.Header
 
 @Composable
@@ -105,7 +104,6 @@ fun CreateAccScreen(navController: NavController) {
                 ) {
                     Button(
                         onClick = {
-                            //API TO GENERATE PASSWORD
                             navController.navigate(Routes.PASSWORD_GENERATOR)
                         },
                         modifier = Modifier
@@ -117,6 +115,8 @@ fun CreateAccScreen(navController: NavController) {
                     Button(
                         onClick = {
                             //API TO CHECK IF IS OKAY
+
+                            //IF IS OKAY THEN
                             navController.navigate(Routes.VAULT)
                         },
                         modifier = Modifier
@@ -128,4 +128,5 @@ fun CreateAccScreen(navController: NavController) {
             }
         }
     }
-    }
+}
+
