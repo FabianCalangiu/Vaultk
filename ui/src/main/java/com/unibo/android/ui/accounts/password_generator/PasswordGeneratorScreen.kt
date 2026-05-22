@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.unibo.android.ui.common.Header
 
 @Composable
 fun PasswordGeneratorScreen() {
@@ -20,11 +21,7 @@ fun PasswordGeneratorScreen() {
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text(
-            text = "Password generator",
-            style = MaterialTheme.typography.headlineMedium,
-            color = MaterialTheme.colorScheme.onBackground
-        )
+        Header("Password generator")
 
         /**
          * Generated password card
