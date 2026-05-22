@@ -34,8 +34,10 @@ fun VaultScreen(navController: NavController) {
 
                 AddEntryCard(
                     text = "New Entry",
-
-                ) { }
+                    {
+                        navController.navigate(Routes.INSERT_ACCOUNTS)
+                    }
+                )
             }
 
             SectionCard(

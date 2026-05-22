@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.unibo.android.ui.accounts.CreateAccScreen
 import com.unibo.android.ui.login.FormLogin
 import com.unibo.android.ui.notes.CreateNoteScreen
 import com.unibo.android.ui.register.FormRegister
@@ -55,6 +56,10 @@ fun AppNavigation() {
 
         composable(Routes.INSERT_NOTES) {
             CreateNoteScreen()
+        }
+
+        composable(Routes.INSERT_ACCOUNTS) {
+            CreateAccScreen()
         }
     }
 }
