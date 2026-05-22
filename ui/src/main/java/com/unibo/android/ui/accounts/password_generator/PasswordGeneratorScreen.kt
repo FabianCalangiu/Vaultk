@@ -29,7 +29,7 @@ fun PasswordGeneratorScreen() {
         /**
          * Generated password card
          */
-        GeneratedPasswordCard()
+        GeneratedPasswordCard(password = "password", { println("Password generated") })
 
         /**
          * Password options selections
