@@ -2,7 +2,7 @@ package com.unibo.android.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Background = Color(0xFF524B7B)
+val Background = Color(0xFF48426D)
 val Surface = Color(0xFF2F2A52)
 
 val Header = Color(0xFF272344)
