@@ -6,5 +6,5 @@ object Routes {
     const val FORM_REGISTER = "form_register"
     const val VAULT = "vault"
 
-    const val INSERT_NOTES = "inser_notes"
+    const val INSERT_NOTES = "insert_notes"
 }

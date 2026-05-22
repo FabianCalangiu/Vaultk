@@ -33,7 +33,11 @@ fun onSubmit(username: String, password: String, navController: NavController) {
 
     // check if credentials are okay and then
 
-    navController.navigate(Routes.VAULT)
+    navController.navigate(Routes.VAULT) {
+        popUpTo(Routes.FORM_LOGIN) {
+            inclusive = true
+        }
+    }
 }
 
 @Composable
@@ -76,7 +80,11 @@ fun LoginCard(
                     fontSize = 20.sp,
                     modifier = Modifier
                         .clickable{
-                            navController.navigate(Routes.FORM_REGISTER)
+                            navController.navigate(Routes.FORM_REGISTER) {
+                                popUpTo(Routes.FORM_LOGIN) {
+                                    inclusive = true
+                                }
+                            }
                         }
                 )
             }
