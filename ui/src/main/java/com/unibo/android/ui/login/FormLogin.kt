@@ -35,7 +35,7 @@ fun FormLogin(navController: NavController) {
                 .weight(1f),
             contentAlignment = Alignment.Center
         ) {
-            LoginCard(navController,)
+            LoginCard(navController)
         }
     }
 }

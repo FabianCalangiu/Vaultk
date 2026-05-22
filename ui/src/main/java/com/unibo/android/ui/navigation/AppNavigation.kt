@@ -56,6 +56,5 @@ fun AppNavigation() {
         composable(Routes.INSERT_NOTES) {
             CreateNoteScreen()
         }
-
     }
 }
