@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.unibo.android.ui.vault.VaultHeader
+import com.unibo.android.ui.common.Header
 
 @Composable
 fun FormRegister(navController: NavController) {
@@ -19,7 +19,7 @@ fun FormRegister(navController: NavController) {
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
-        VaultHeader()
+        Header("VaultK")
 
         Box(
             modifier = Modifier

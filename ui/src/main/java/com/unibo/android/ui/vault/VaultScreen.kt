@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.unibo.android.ui.common.Header
 import com.unibo.android.uicompose.navigation.Routes
 
 @Composable
@@ -19,7 +20,7 @@ fun VaultScreen(navController: NavController) {
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
-        VaultHeader()
+        Header("Vault")
 
         Column(
             modifier = Modifier
@@ -45,11 +46,7 @@ fun VaultScreen(navController: NavController) {
                 AddEntryCard(
                     text = "New Secure Note",
                     {
-                        navController.navigate(Routes.INSERT_NOTES) {
-                            popUpTo(Routes.VAULT) {
-                                inclusive = true
-                            }
-                        }
+                        navController.navigate(Routes.INSERT_NOTES)
                     }
                 )
             }
