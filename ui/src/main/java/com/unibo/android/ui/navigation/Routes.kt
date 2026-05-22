@@ -8,4 +8,6 @@ object Routes {
 
     const val INSERT_NOTES = "insert_notes"
     const val INSERT_ACCOUNTS = "insert_accounts"
+
+    const val PASSWORD_GENERATOR = "password_generator"
 }

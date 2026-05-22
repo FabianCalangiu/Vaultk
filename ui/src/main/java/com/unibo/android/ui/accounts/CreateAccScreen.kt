@@ -19,13 +19,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
+import com.unibo.android.ui.common.Header
+import com.unibo.android.uicompose.navigation.Routes
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.unibo.android.ui.common.Header
 import com.unibo.android.ui.theme.Header
 
 @Composable
-fun CreateAccScreen() {
+fun CreateAccScreen(navController: NavController) {
     var accountTitle by remember {
         mutableStateOf("")
     }
@@ -103,6 +106,7 @@ fun CreateAccScreen() {
                     Button(
                         onClick = {
                             //API TO GENERATE PASSWORD
+                            navController.navigate(Routes.PASSWORD_GENERATOR)
                         },
                         modifier = Modifier
                             .align(Alignment.End)
@@ -112,7 +116,8 @@ fun CreateAccScreen() {
 
                     Button(
                         onClick = {
-                            //API TO GENERATE PASSWORD
+                            //API TO CHECK IF IS OKAY
+                            navController.navigate(Routes.VAULT)
                         },
                         modifier = Modifier
                             .align(Alignment.End)
@@ -123,4 +128,4 @@ fun CreateAccScreen() {
             }
         }
     }
-}
+    }
