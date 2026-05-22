@@ -60,11 +60,14 @@ fun LoginCard(
             .background(MaterialTheme.colorScheme.surface)
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier
+                .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Row(
-                Modifier.fillMaxWidth().padding(15.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .padding(15.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(
@@ -96,7 +99,8 @@ fun LoginCard(
                 label = {
                     Text("Insert username")
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
             )
 
             OutlinedTextField(
@@ -108,7 +112,8 @@ fun LoginCard(
                     Text("Insert password")
                 },
                 visualTransformation = PasswordVisualTransformation(),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
             )
 
             Button(
@@ -117,7 +122,8 @@ fun LoginCard(
                         onSubmit(username, password, navController)
                     }
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
             ) {
                 Text("Submit")
             }

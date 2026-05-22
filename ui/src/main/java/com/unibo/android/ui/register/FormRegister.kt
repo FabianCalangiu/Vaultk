@@ -17,6 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.unibo.android.ui.vault.VaultHeader
 
 @Composable
 fun FormRegister(navController: NavController) {
@@ -25,22 +26,7 @@ fun FormRegister(navController: NavController) {
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.surface)
-                .height(70.dp)
-        ) {
-            Text(
-                text = "VaultK",
-                color = MaterialTheme.colorScheme.onBackground,
-                fontSize = 30.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Left,
-                modifier = Modifier
-                    .padding(20.dp, 20.dp)
-            )
-        }
+        VaultHeader()
 
         Box(
             modifier = Modifier
