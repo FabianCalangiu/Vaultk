@@ -12,7 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import com.unibo.android.ui.vault.VaultHeader
+import com.unibo.android.ui.common.Header
 
 @Composable
 fun CreateAccScreen() {
@@ -29,7 +29,7 @@ fun CreateAccScreen() {
     }
 
     Column() {
-        VaultHeader("New Account")
+        Header("New Account")
 
         Box() {
             OutlinedTextField(
