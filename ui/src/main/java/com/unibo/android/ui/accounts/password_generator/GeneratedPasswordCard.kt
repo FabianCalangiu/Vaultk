@@ -77,7 +77,7 @@ fun GeneratedPasswordCard(
 }
 
 /**
- * Function to call Android context and to copy to clipboard the password
+ * Function to call Android context and to copy the password to the user's clipboard
  */
 private fun copyToClipboard(context: Context, password: String) {
     val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager

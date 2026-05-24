@@ -55,76 +55,88 @@ fun PasswordGeneratorScreen() {
         mutableStateOf(true)
     }
 
+    /**
+     * Main screen container.
+     */
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .padding(16.dp),
-
-        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
 
         /**
-         * Header
+         * Full-width header.
          */
         Header("Password generator")
 
         /**
-         * Generated password card
+         * Screen content.
          */
-        GeneratedPasswordCard(
+        Column(
+            modifier = Modifier.padding(16.dp),
 
-            password = generatedPassword,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
 
-            onGenerateClick = {
+            /**
+             * Generated password card.
+             */
+            GeneratedPasswordCard(
 
-                generatedPassword = generatePassword(
-                    length = passwordLength.toInt(),
-                    includeNumbers = includeNumbers,
-                    includeSpecialChars = includeSpecialChars
-                )
-            }
-        )
+                password = generatedPassword,
 
-        /**
-         * Password options
-         */
-        PasswordOptionsSection(
+                onGenerateClick = {
 
-            passwordLength = passwordLength,
+                    generatedPassword = generatePassword(
+                        length = passwordLength.toInt(),
 
-            onPasswordLengthChange = {
-                passwordLength = it
-            },
+                        includeNumbers = includeNumbers,
 
-            includeNumbers = includeNumbers,
+                        includeSpecialChars = includeSpecialChars
+                    )
+                }
+            )
 
-            onIncludeNumbersChange = {
-                includeNumbers = it
-            },
+            /**
+             * Password options section.
+             */
+            PasswordOptionsSection(
 
-            includeSpecialChars = includeSpecialChars,
+                passwordLength = passwordLength,
 
-            onIncludeSpecialCharsChange = {
-                includeSpecialChars = it
-            },
+                onPasswordLengthChange = {
+                    passwordLength = it
+                },
 
-            includeUppercase = includeUppercase,
+                includeNumbers = includeNumbers,
 
-            onIncludeUppercaseChange = {
-                includeUppercase = it
-            },
+                onIncludeNumbersChange = {
+                    includeNumbers = it
+                },
 
-            includeLowercase = includeLowercase,
+                includeSpecialChars = includeSpecialChars,
 
-            onIncludeLowercaseChange = {
-                includeLowercase = it
-            }
-        )
+                onIncludeSpecialCharsChange = {
+                    includeSpecialChars = it
+                },
 
-        /**
-         * Confirm button
-         */
-        ConfirmPasswordButton()
+                includeUppercase = includeUppercase,
+
+                onIncludeUppercaseChange = {
+                    includeUppercase = it
+                },
+
+                includeLowercase = includeLowercase,
+
+                onIncludeLowercaseChange = {
+                    includeLowercase = it
+                }
+            )
+
+            /**
+             * Confirm button.
+             */
+            ConfirmPasswordButton()
+        }
     }
 }
