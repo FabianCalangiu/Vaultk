@@ -26,6 +26,7 @@ import androidx.compose.ui.platform.LocalContext
 @Composable
 fun GeneratedPasswordCard(
     password: String,
+    entropyBits: Double,
     onGenerateClick: () -> Unit
 ) {
     val context = LocalContext.current

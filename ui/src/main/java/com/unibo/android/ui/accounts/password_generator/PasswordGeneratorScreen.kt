@@ -10,6 +10,8 @@ import androidx.compose.material3.MaterialTheme
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableDoubleStateOf
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -17,10 +19,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
+import com.unibo.android.domain.usecases.GeneratePasswordUseCase
+
 import com.unibo.android.ui.common.Header
 
 @Composable
 fun PasswordGeneratorScreen() {
+
+    /**
+     * Password generation use case.
+     */
+    val generatePasswordUseCase = remember {
+        GeneratePasswordUseCase()
+    }
 
     /**
      * Generated password state.
@@ -30,10 +41,17 @@ fun PasswordGeneratorScreen() {
     }
 
     /**
+     * Password entropy state.
+     */
+    var entropyBits by remember {
+        mutableDoubleStateOf(0.0)
+    }
+
+    /**
      * Password length state.
      */
     var passwordLength by remember {
-        mutableStateOf(16f)
+        mutableFloatStateOf(16f)
     }
 
     /**
@@ -70,7 +88,7 @@ fun PasswordGeneratorScreen() {
         Header("Password generator")
 
         /**
-         * Screen content.
+         * Screen content container.
          */
         Column(
             modifier = Modifier.padding(16.dp),
@@ -79,21 +97,35 @@ fun PasswordGeneratorScreen() {
         ) {
 
             /**
-             * Generated password card.
+             * Generated password display card.
              */
             GeneratedPasswordCard(
 
                 password = generatedPassword,
 
+                entropyBits = entropyBits,
+
                 onGenerateClick = {
 
-                    generatedPassword = generatePassword(
+                    val result = generatePasswordUseCase(
+
                         length = passwordLength.toInt(),
 
                         includeNumbers = includeNumbers,
 
-                        includeSpecialChars = includeSpecialChars
+                        includeSpecialChars = includeSpecialChars,
+
+                        includeUppercase = includeUppercase,
+
+                        includeLowercase = includeLowercase
                     )
+
+                    /**
+                     * Update UI state.
+                     */
+                    generatedPassword = result.password
+
+                    entropyBits = result.entropyBits
                 }
             )
 
