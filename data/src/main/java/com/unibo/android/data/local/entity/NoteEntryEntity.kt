@@ -2,6 +2,7 @@ package com.unibo.android.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
 
@@ -9,12 +10,13 @@ import androidx.room.PrimaryKey
     tableName = "note_entries",
     foreignKeys = [
         ForeignKey(
-            entity = User::class,
+            entity = UserEntity::class,
             parentColumns = ["id"],
             childColumns = ["user_id"],
             onDelete = ForeignKey.CASCADE
         )
-    ]
+    ],
+    indices = [Index("userId")]
 )
 data class NoteEntryEntity (
     @PrimaryKey(autoGenerate = true)
