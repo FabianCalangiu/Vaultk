@@ -9,7 +9,7 @@ import com.unibo.android.data.local.entity.NoteEntryEntity
 @Dao
 interface NoteEntryDao {
     @Insert
-    suspend fun insertNote(entry: NoteEntryEntity)
+    suspend fun createNote(entry: NoteEntryEntity)
 
     @Delete
     suspend fun deleteNote(entry: NoteEntryEntity)
