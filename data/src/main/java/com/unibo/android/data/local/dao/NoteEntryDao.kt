@@ -15,6 +15,6 @@ interface NoteEntryDao {
     suspend fun deleteNote(entry: NoteEntryEntity)
 
     //USARE SESSION MANAGER O DATASTORE PER RECUPERARE UTENTE "LOGGATO"
-    @Query("SELECT * FROM note_entries WHERE user_id = :userId")
+    @Query("SELECT * FROM note_entries WHERE userId = :userId")
     suspend fun getAllNotes(userId: Long): List<NoteEntryEntity>
 }

@@ -14,6 +14,6 @@ interface AccountEntryDao {
     @Delete
     suspend fun deleteEntry(entry: AccountEntryEntity)
 
-    @Query("SELECT * FROM account_entries WHERE user_id = :userId")
+    @Query("SELECT * FROM account_entries WHERE userId = :userId")
     suspend fun getAllEntries(userId: Long): List<AccountEntryEntity>
 }
