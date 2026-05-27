@@ -15,6 +15,14 @@ class NoteRepository(
         noteEntryDao.deleteNote(note)
     }
 
+    suspend fun updateNote(note: NoteEntryEntity) {
+        noteEntryDao.updateNote(note)
+    }
+
+    suspend fun getNoteById(id: Long) {
+        noteEntryDao.getNoteById(id)
+    }
+
     suspend fun getAllNotes(userId: Long) {
         noteEntryDao.getAllNotes(userId)
     }
