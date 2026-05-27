@@ -12,7 +12,7 @@ import androidx.room.PrimaryKey
         ForeignKey(
             entity = UserEntity::class,
             parentColumns = ["id"],
-            childColumns = ["user_id"],
+            childColumns = ["userId"],
             onDelete = ForeignKey.CASCADE
         )
     ],
@@ -22,7 +22,8 @@ data class NoteEntryEntity (
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
     val title: String,
-    val description: String,
+    val content: String,
+
     //Foreign Key
-    val user_id: Long
+    val userId: Long
 )

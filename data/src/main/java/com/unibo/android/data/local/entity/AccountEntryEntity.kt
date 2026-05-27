@@ -11,7 +11,7 @@ import androidx.room.PrimaryKey
         ForeignKey(
             entity = UserEntity::class,
             parentColumns = ["id"],
-            childColumns = ["user_id"],
+            childColumns = ["userId"],
             onDelete = ForeignKey.CASCADE
         )
     ],
@@ -24,5 +24,5 @@ data class AccountEntryEntity(
     val email: String,
     val password: String,
     //Foreign Key
-    val user_id: Long
+    val userId: Long
 )
