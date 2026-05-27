@@ -15,6 +15,14 @@ class AccountRepository(
         accountEntryDao.deleteEntry(accountEntry)
     }
 
+    suspend fun updateAccountEntry(accountEntry: AccountEntryEntity) {
+        accountEntryDao.updateEntry(accountEntry)
+    }
+
+    suspend fun getAccountEntryById(id: Long) {
+        accountEntryDao.getEntryById(id)
+    }
+
     suspend fun getAllAccounts(userId: Long) {
         accountEntryDao.getAllEntries(userId)
     }
