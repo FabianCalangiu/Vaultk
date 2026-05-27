@@ -1,4 +1,4 @@
-package com.unibo.android.data.local.db
+package com.unibo.android.data.local.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
