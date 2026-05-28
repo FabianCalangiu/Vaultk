@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -23,12 +24,18 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.unibo.android.domain.repositories.UserRepository
+import com.unibo.android.domain.usecases.RegisterUseCase
 import com.unibo.android.uicompose.navigation.Routes
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
-fun onSubmit(username: String, password: String, navController: NavController) {
+fun onSubmit(username: String, password: String, navController: NavController, scope: CoroutineScope) {
     println("Entered credentials")
 
-    // check if credentials are okay and then
+    scope.launch {
+        RegisterUseCase()
+    }
 
     navController.navigate(Routes.VAULT) {
         popUpTo(Routes.FORM_REGISTER) {
@@ -41,6 +48,8 @@ fun onSubmit(username: String, password: String, navController: NavController) {
 fun RegisterCard(
     navController: NavController
 ) {
+
+    val coroutineScope = rememberCoroutineScope()
 
     var username by remember {
         mutableStateOf("")
@@ -134,7 +143,7 @@ fun RegisterCard(
                 onClick = {
                     if(username.isNotBlank() && password.isNotBlank() && confirmPassword.isNotBlank()) {
                         if(password == confirmPassword) {
-                            onSubmit(username, password, navController)
+                            onSubmit(username, password, navController, coroutineScope)
                         }
 
                     }
