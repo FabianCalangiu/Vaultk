@@ -39,11 +39,11 @@ class UserRepositoryImpl(
     }
 
     override suspend fun getUserId(
-        user: UserModel
+        email: String
     ): Long? {
 
         return userDao.getUserId(
-            user.email
+            email
         )
     }
 
