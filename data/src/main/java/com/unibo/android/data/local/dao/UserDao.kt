@@ -20,5 +20,5 @@ interface UserDao {
     suspend fun getUserId(email: String): Long?
 
     @Query("SELECT password FROM users WHERE email = :email LIMIT 1")
-    suspend fun getUserPasswordById(email: String): String?
+    suspend fun getUserPasswordByEmail(email: String): String?
 }
