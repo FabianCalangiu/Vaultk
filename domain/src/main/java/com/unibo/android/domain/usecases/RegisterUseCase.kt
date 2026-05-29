@@ -5,6 +5,9 @@ import com.unibo.android.domain.models.UserModel
 import com.unibo.android.domain.repositories.UserRepository
 import org.mindrot.jbcrypt.BCrypt
 
+/**
+ * Register functions
+ */
 interface RegisterUseCase {
 
     suspend operator fun invoke(
