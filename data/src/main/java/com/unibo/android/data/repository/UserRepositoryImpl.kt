@@ -1,14 +1,18 @@
 package com.unibo.android.data.repository
 
+import android.content.Context
 import com.unibo.android.data.local.dao.UserDao
+import com.unibo.android.data.local.db.VaultDatabase
 import com.unibo.android.data.local.entity.UserEntity
 
 import com.unibo.android.domain.models.UserModel
 import com.unibo.android.domain.repositories.UserRepository
 
 class UserRepositoryImpl(
-    private val userDao: UserDao
+    context: Context
 ) : UserRepository {
+
+    private val userDao = VaultDatabase.getInstance(context).userDao()
 
     override suspend fun createUser(
         user: UserModel
