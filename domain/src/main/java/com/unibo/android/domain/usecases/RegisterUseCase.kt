@@ -5,11 +5,19 @@ import com.unibo.android.domain.models.UserModel
 import com.unibo.android.domain.repositories.UserRepository
 import org.mindrot.jbcrypt.BCrypt
 
-class RegisterUseCase(
-    private val userRepository: UserRepository
-) {
+interface RegisterUseCase {
 
     suspend operator fun invoke(
+        email: String,
+        password: String
+    ): Result<Unit>
+}
+
+class RegisterUseCaseImpl(
+    private val userRepository: UserRepository
+) : RegisterUseCase {
+
+    override suspend operator fun invoke(
         email: String,
         password: String
     ): Result<Unit> {

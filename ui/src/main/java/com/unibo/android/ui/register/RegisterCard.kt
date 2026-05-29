@@ -24,22 +24,43 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.unibo.android.domain.repositories.UserRepository
-import com.unibo.android.domain.usecases.RegisterUseCase
+import com.unibo.android.domain.di.UseCasesProvider
 import com.unibo.android.uicompose.navigation.Routes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-fun onSubmit(username: String, password: String, navController: NavController, scope: CoroutineScope) {
+fun onSubmit(email: String, password: String, navController: NavController, scope: CoroutineScope) {
     println("Entered credentials")
 
     scope.launch {
-        RegisterUseCase()
-    }
 
-    navController.navigate(Routes.VAULT) {
-        popUpTo(Routes.FORM_REGISTER) {
-            inclusive = true
+        val registerUseCase =
+            UseCasesProvider.registerUseCase
+
+        val result = registerUseCase(
+
+            email = email,
+
+            password = password
+        )
+
+        if (result.isSuccess) {
+
+            navController.navigate(
+                Routes.VAULT
+            ) {
+                popUpTo(
+                    Routes.FORM_REGISTER
+                ) {
+                    inclusive = true
+                }
+            }
+
+        } else {
+
+            println(
+                result.exceptionOrNull()?.message
+            )
         }
     }
 }
@@ -51,7 +72,7 @@ fun RegisterCard(
 
     val coroutineScope = rememberCoroutineScope()
 
-    var username by remember {
+    var email by remember {
         mutableStateOf("")
     }
 
@@ -102,12 +123,12 @@ fun RegisterCard(
                 )
             }
             OutlinedTextField(
-                value = username,
+                value = email,
                 onValueChange = {
-                    username = it
+                    email = it
                 },
                 label = {
-                    Text("Insert username")
+                    Text("Insert e-mail")
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -141,9 +162,9 @@ fun RegisterCard(
 
             Button(
                 onClick = {
-                    if(username.isNotBlank() && password.isNotBlank() && confirmPassword.isNotBlank()) {
+                    if(email.isNotBlank() && password.isNotBlank() && confirmPassword.isNotBlank()) {
                         if(password == confirmPassword) {
-                            onSubmit(username, password, navController, coroutineScope)
+                            onSubmit(email, password, navController, coroutineScope)
                         }
 
                     }
