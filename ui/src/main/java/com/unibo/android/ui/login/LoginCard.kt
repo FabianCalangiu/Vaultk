@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -23,16 +24,31 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.unibo.android.domain.di.UseCasesProvider
 import com.unibo.android.uicompose.navigation.Routes
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
-fun onSubmit(username: String, password: String, navController: NavController) {
+fun onSubmit(email: String, password: String, navController: NavController, scope: CoroutineScope) {
     println("Entered credentials")
 
-    // check if credentials are okay and then
+    scope.launch {
+        val loginUseCase = UseCasesProvider.loginUseCase
 
-    navController.navigate(Routes.VAULT) {
-        popUpTo(Routes.FORM_LOGIN) {
-            inclusive = true
+        val result = loginUseCase(email, password)
+
+        if(!result) {
+            println("Something went wrong")
+        } else {
+            navController.navigate(
+                Routes.VAULT
+            ) {
+                popUpTo(
+                    Routes.FORM_REGISTER
+                ) {
+                    inclusive = true
+                }
+            }
         }
     }
 }
@@ -42,7 +58,9 @@ fun LoginCard(
     navController: NavController,
 ) {
 
-    var username by remember {
+    val coroutineScope = rememberCoroutineScope()
+
+    var email by remember {
         mutableStateOf("")
     }
 
@@ -89,12 +107,12 @@ fun LoginCard(
                 )
             }
             OutlinedTextField(
-                value = username,
+                value = email,
                 onValueChange = {
-                    username = it
+                    email = it
                 },
                 label = {
-                    Text("Insert username")
+                    Text("Insert email")
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -115,8 +133,8 @@ fun LoginCard(
 
             Button(
                 onClick = {
-                    if(username.isNotBlank() && password.isNotBlank()) {
-                        onSubmit(username, password, navController)
+                    if(email.isNotBlank() && password.isNotBlank()) {
+                        onSubmit(email, password, navController, coroutineScope)
                     }
                 },
                 modifier = Modifier
