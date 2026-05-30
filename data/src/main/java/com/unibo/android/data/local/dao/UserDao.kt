@@ -17,7 +17,7 @@ interface UserDao {
     //USARE SESSION MANAGER O DATASTORE PER RECUPERARE UTENTE "LOGGATO"
     //QUESTA QUERY SOTTO DEVE ESSERE CHIAMATA COSI SI POSSONO FARE LE ALTRE PER OTTENERE DATI RELATIVI A QUELL'ACCOUNT
     @Query("SELECT id FROM users WHERE email = :email LIMIT 1")
-    suspend fun getUserId(email: String): Long?
+    suspend fun getUserId(email: String): Long
 
     @Query("SELECT password FROM users WHERE email = :email LIMIT 1")
     suspend fun getUserPasswordByEmail(email: String): String?

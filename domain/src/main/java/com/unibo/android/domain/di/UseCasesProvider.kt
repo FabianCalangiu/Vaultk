@@ -12,12 +12,8 @@ object UseCasesProvider {
     fun setup(
         repositoryProvider: RepositoryProvider
     ) {
-        registerUseCase = RegisterUseCaseImpl(
-            userRepository = repositoryProvider.userRepository
-        )
+        registerUseCase = RegisterUseCaseImpl(repositoryProvider.userRepository)
 
-        loginUseCase = LoginUseCaseImpl(
-            userRepository = repositoryProvider.userRepository
-        )
+        loginUseCase = LoginUseCaseImpl(repositoryProvider.userRepository)
     }
 }
