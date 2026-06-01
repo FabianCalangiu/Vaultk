@@ -8,7 +8,7 @@ interface LoginUseCase {
     suspend operator fun invoke(
         email: String,
         password: String
-    ): Boolean
+    ): Result<Unit>
 }
 
 class LoginUseCaseImpl(
@@ -18,14 +18,18 @@ class LoginUseCaseImpl(
     override suspend operator fun invoke(
         email: String,
         password: String
-    ): Boolean {
+    ): Result<Unit> {
 
         val hashedPassword = userRepository.getUserPasswordByEmail(email)
 
         if (hashedPassword == null) {
-            return false
+            return Result.failure(Exception("User not found"))
         }
 
-        return BCrypt.checkpw(password, hashedPassword)
+        if(BCrypt.checkpw(password, hashedPassword)) {
+            return Result.success(Unit)
+        } else {
+            return Result.failure(Exception("Invalid password"))
+        }
     }
 }
