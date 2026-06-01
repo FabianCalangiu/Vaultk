@@ -37,7 +37,7 @@ fun onSubmit(email: String, password: String, navController: NavController, scop
 
         val result = loginUseCase(email, password)
 
-        if(!result) {
+        if(result.isFailure) {
             println("Something went wrong")
         } else {
             navController.navigate(
