@@ -26,6 +26,18 @@ class SessionManager(
         }
     }
 
+    suspend fun saveUserEmail(email: String) {
+        context.dataStore.edit { preferences ->
+            preferences[USER_EMAIL] = email
+        }
+    }
+
+    suspend fun saveUserId(userId: Long) {
+        context.dataStore.edit { preferences ->
+            preferences[USER_ID] = userId
+        }
+    }
+
     fun getUserId(): Flow<Long?> {
         return context.dataStore.data.map { preferences ->
             preferences[USER_ID]
