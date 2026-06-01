@@ -19,6 +19,6 @@ object UseCasesProvider {
     ) {
         registerUseCase = RegisterUseCaseImpl(repositoryProvider.userRepository)
         loginUseCase = LoginUseCaseImpl(repositoryProvider.userRepository)
-        sessionUseCase = SessionUseCaseImpl(repositoryProvider.sessionRepository)
+        sessionUseCase = SessionUseCaseImpl(repositoryProvider.sessionRepository, repositoryProvider.userRepository)
     }
 }

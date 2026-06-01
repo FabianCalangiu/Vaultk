@@ -34,18 +34,13 @@ fun onSubmit(email: String, password: String, navController: NavController, scop
 
     scope.launch {
 
-        val registerUseCase =
-            UseCasesProvider.registerUseCase
+        val registerUseCase = UseCasesProvider.registerUseCase
+        val sessionUseCase = UseCasesProvider.sessionUseCase
 
-        val result = registerUseCase(
+        val registerResult = registerUseCase(email, password)
+        val sessionResult = sessionUseCase(email, "register")
 
-            email = email,
-
-            password = password
-        )
-
-        if (result.isSuccess) {
-
+        if (registerResult.isSuccess && sessionResult.isSuccess) {
             navController.navigate(
                 Routes.VAULT
             ) {
@@ -55,11 +50,10 @@ fun onSubmit(email: String, password: String, navController: NavController, scop
                     inclusive = true
                 }
             }
-
         } else {
 
             println(
-                result.exceptionOrNull()?.message
+                registerResult.exceptionOrNull()?.message
             )
         }
     }
