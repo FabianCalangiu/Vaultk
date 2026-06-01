@@ -9,7 +9,7 @@ interface SessionRepository {
 
     suspend fun saveUserId(userId: Long)
 
-    fun getUserId(): Flow<Long?>
+    fun getUserId(): Flow<Long>
 
     fun getUserEmail(): Flow<String?>
 

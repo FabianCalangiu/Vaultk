@@ -24,6 +24,12 @@ class SessionUseCaseImpl(
             "register" -> {
                 val id = userRepository.getUserId(email)
 
+                if (id == null) {
+                    return Result.failure(
+                        Exception("User not found")
+                    )
+                }
+
                 sessionRepository.saveUser(id, email)
             }
             "login" -> {

@@ -25,6 +25,8 @@ class RegisterUseCaseImpl(
         password: String
     ): Result<Unit> {
 
+        val NULL: Long = 0
+
         return try {
 
             if (!isValidEmail(email)) {
@@ -50,7 +52,7 @@ class RegisterUseCaseImpl(
 
             val existingUserId = userRepository.getUserId(email)
 
-            if (existingUserId != null) {
+            if (existingUserId != NULL) {
                 return Result.failure(Exception("User already exists"))
             }
 

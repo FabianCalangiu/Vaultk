@@ -29,31 +29,64 @@ import com.unibo.android.uicompose.navigation.Routes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-fun onSubmit(email: String, password: String, navController: NavController, scope: CoroutineScope) {
+fun onSubmit(
+    email: String,
+    password: String,
+    navController: NavController,
+    scope: CoroutineScope
+) {
+
     println("Entered credentials")
 
     scope.launch {
 
-        val registerUseCase = UseCasesProvider.registerUseCase
-        val sessionUseCase = UseCasesProvider.sessionUseCase
+        val registerUseCase =
+            UseCasesProvider.registerUseCase
 
-        val registerResult = registerUseCase(email, password)
-        val sessionResult = sessionUseCase(email, "register")
+        val sessionUseCase =
+            UseCasesProvider.sessionUseCase
 
-        if (registerResult.isSuccess && sessionResult.isSuccess) {
-            navController.navigate(
-                Routes.VAULT
-            ) {
-                popUpTo(
-                    Routes.FORM_REGISTER
+        val registerResult =
+            registerUseCase(
+                email,
+                password
+            )
+
+        if (registerResult.isSuccess) {
+
+            val sessionResult =
+                sessionUseCase(
+                    email,
+                    "register"
+                )
+
+            if (sessionResult.isSuccess) {
+
+                navController.navigate(
+                    Routes.VAULT
                 ) {
-                    inclusive = true
+                    popUpTo(
+                        Routes.FORM_REGISTER
+                    ) {
+                        inclusive = true
+                    }
                 }
+
+            } else {
+
+                println(
+                    sessionResult
+                        .exceptionOrNull()
+                        ?.message
+                )
             }
+
         } else {
 
             println(
-                registerResult.exceptionOrNull()?.message
+                registerResult
+                    .exceptionOrNull()
+                    ?.message
             )
         }
     }

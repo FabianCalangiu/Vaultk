@@ -39,9 +39,9 @@ class SessionImpl(
         }
     }
 
-    override fun getUserId(): Flow<Long?> {
+    override fun getUserId(): Flow<Long> {
         return context.dataStore.data.map { preferences ->
-            preferences[USER_ID]
+            preferences[USER_ID] as Long
         }
     }
 
