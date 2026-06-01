@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.unibo.android.domain.di.UseCasesProvider
+import com.unibo.android.domain.di.UseCasesProvider.sessionUseCase
 import com.unibo.android.uicompose.navigation.Routes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -34,10 +35,12 @@ fun onSubmit(email: String, password: String, navController: NavController, scop
 
     scope.launch {
         val loginUseCase = UseCasesProvider.loginUseCase
+        val sessionUseCase = UseCasesProvider.sessionUseCase
 
-        val result = loginUseCase(email, password)
+        val resultLogin = loginUseCase(email, password)
+        val resultSession = sessionUseCase(email, "login")
 
-        if(!result) {
+        if(!resultLogin && resultSession.isFailure) {
             println("Something went wrong")
         } else {
             navController.navigate(

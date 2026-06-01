@@ -3,7 +3,6 @@ package com.unibo.android.data.repository
 import android.content.Context
 import com.unibo.android.data.local.db.VaultDatabase
 import com.unibo.android.data.local.entity.UserEntity
-import com.unibo.android.data.session.SessionManager
 import com.unibo.android.domain.models.UserModel
 import com.unibo.android.domain.repositories.UserRepository
 
@@ -12,7 +11,6 @@ class UserRepositoryImpl(
 ) : UserRepository {
 
     private val userDao = VaultDatabase.getInstance(context).userDao()
-    private val sessionManager: SessionManager = SessionManager(context)
 
     override suspend fun createUser(
         user: UserModel
@@ -26,9 +24,6 @@ class UserRepositoryImpl(
                 password = user.password
             )
         )
-
-        sessionManager.saveUserEmail(user.email)
-
     }
 
     override suspend fun deleteUser(
@@ -48,9 +43,6 @@ class UserRepositoryImpl(
     override suspend fun getUserId(
         email: String
     ): Long {
-
-
-
         return userDao.getUserId(email)
     }
 

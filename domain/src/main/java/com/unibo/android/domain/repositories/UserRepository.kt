@@ -5,6 +5,6 @@ import com.unibo.android.domain.models.UserModel
 interface UserRepository {
     suspend fun createUser(user: UserModel)
     suspend fun deleteUser(user: UserModel)
-    suspend fun getUserId(email: String): Long?
+    suspend fun getUserId(email: String): Long
     suspend fun getUserPasswordByEmail(email: String): String?
 }
