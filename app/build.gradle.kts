@@ -15,7 +15,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.unibo.android.corsolp2526"
+        applicationId = "com.unibo.android.vaultk"
         minSdk = 31
         targetSdk = 36
         versionCode = 1
