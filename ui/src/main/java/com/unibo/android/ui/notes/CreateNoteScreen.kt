@@ -16,18 +16,36 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.unibo.android.domain.di.UseCasesProvider
 import com.unibo.android.ui.common.Header
 import com.unibo.android.ui.theme.Header
 import com.unibo.android.uicompose.navigation.Routes
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
+fun onCreate(title: String, content: String, navController: NavController,  scope: CoroutineScope) {
+    scope.launch {
+        val addNoteEntryUseCase = UseCasesProvider.addNoteEntryUseCase
+
+        val addNoteResult = addNoteEntryUseCase(title, content)
+
+        if(addNoteResult.isSuccess) {
+            navController.navigate(Routes.VAULT)
+        }
+    }
+}
 @Composable
 fun CreateNoteScreen(navController: NavController) {
+
+    val coroutineScope = rememberCoroutineScope()
+
     var noteTitle by remember {
         mutableStateOf("")
     }
@@ -83,11 +101,7 @@ fun CreateNoteScreen(navController: NavController) {
                 Button(
                     onClick = {
                         if(noteText.isNotBlank() && noteTitle.isNotBlank()) {
-                            //TO DO API TO CHECK IF IS OKAY
-
-
-                            // IF IS OKAY THEN GO TO VAULT
-                            navController.navigate(Routes.VAULT)
+                            onCreate(noteTitle, noteText, navController, coroutineScope)
                         }
 
                     },

@@ -35,16 +35,11 @@ fun onSubmit(
     navController: NavController,
     scope: CoroutineScope
 ) {
-
-    println("Entered credentials")
-
     scope.launch {
 
-        val registerUseCase =
-            UseCasesProvider.registerUseCase
+        val registerUseCase = UseCasesProvider.registerUseCase
 
-        val sessionUseCase =
-            UseCasesProvider.sessionUseCase
+        val sessionUseCase = UseCasesProvider.sessionUseCase
 
         val registerResult =
             registerUseCase(
