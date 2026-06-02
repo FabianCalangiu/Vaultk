@@ -20,6 +20,7 @@ import kotlin.collections.emptyList
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import com.unibo.android.domain.di.UseCasesProvider
+import com.unibo.android.domain.models.NoteEntryModel
 import com.unibo.android.ui.common.EntryCard
 
 @Composable
@@ -28,8 +29,13 @@ fun VaultScreen(navController: NavController) {
         mutableStateOf<List<AccountEntryModel>>(emptyList())
     }
 
+    var notes by remember {
+        mutableStateOf<List<NoteEntryModel>>(emptyList())
+    }
+
     LaunchedEffect(Unit) {
         accounts = UseCasesProvider.getAccountsUseCase()
+        notes = UseCasesProvider.getNotesUseCase()
     }
 
     Column(
@@ -68,7 +74,14 @@ fun VaultScreen(navController: NavController) {
             SectionCard(
                 title = "Notes"
             ) {
-                // Display entries
+                notes.forEach { notes ->
+                    EntryCard(
+                        title = notes.title,
+                        onClick = {
+
+                        }
+                    )
+                }
 
                 AddEntryCard(
                     text = "New Secure Note",
