@@ -19,5 +19,17 @@ class AccountRepositoryImpl(context: Context) : AccountRepository {
             )
         )
     }
+
+    override suspend fun getAllEntries(userId: Long): List<AccountEntryModel> {
+        return accountEntryDao.getAllEntries(userId).map { entity ->
+            AccountEntryModel(
+                id = entity.id,
+                title = entity.title,
+                email = entity.email,
+                password = entity.password,
+                userId = entity.userId
+            )
+        }
+    }
 }
 
