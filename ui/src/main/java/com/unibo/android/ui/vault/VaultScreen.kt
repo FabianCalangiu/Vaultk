@@ -7,14 +7,31 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.unibo.android.domain.models.AccountEntryModel
 import com.unibo.android.ui.common.Header
 import com.unibo.android.uicompose.navigation.Routes
+import kotlin.collections.emptyList
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import com.unibo.android.domain.di.UseCasesProvider
+import com.unibo.android.ui.common.EntryCard
 
 @Composable
 fun VaultScreen(navController: NavController) {
+    var accounts by remember {
+        mutableStateOf<List<AccountEntryModel>>(emptyList())
+    }
+
+    LaunchedEffect(Unit) {
+        accounts = UseCasesProvider.getAccountsUseCase()
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -30,7 +47,15 @@ fun VaultScreen(navController: NavController) {
             SectionCard(
                 title = "Accounts"
             ) {
-                // Display entries
+                accounts.forEach { accountEntry ->
+                    EntryCard(
+                        title = accountEntry.title,
+                        onClick = {
+                            // Yet to define
+                        }
+                    )
+                }
+
 
                 AddEntryCard(
                     text = "New Entry",

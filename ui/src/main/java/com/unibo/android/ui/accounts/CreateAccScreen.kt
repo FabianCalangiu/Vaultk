@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,7 +25,9 @@ import com.unibo.android.ui.common.Header
 import com.unibo.android.uicompose.navigation.Routes
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import com.unibo.android.domain.di.UseCasesProvider
 import com.unibo.android.ui.theme.Header
+import kotlinx.coroutines.launch
 
 @Composable
 fun CreateAccScreen(navController: NavController) {
@@ -39,6 +42,8 @@ fun CreateAccScreen(navController: NavController) {
     var passwordAccount by remember {
         mutableStateOf("")
     }
+
+    val scope = rememberCoroutineScope()
 
     Column(
         modifier = Modifier
@@ -77,9 +82,8 @@ fun CreateAccScreen(navController: NavController) {
                         emailAccount = it
                     },
                     label = {
-                        Text("Insert email/username")
+                        Text("Insert e-mail/username")
                     },
-                    visualTransformation = PasswordVisualTransformation(),
                     modifier = Modifier
                         .fillMaxWidth()
                 )
@@ -114,10 +118,19 @@ fun CreateAccScreen(navController: NavController) {
 
                     Button(
                         onClick = {
-                            //API TO CHECK IF IS OKAY
+                            scope.launch {
+                                val result = UseCasesProvider.createAccountUseCase(
+                                    accountTitle,
+                                    emailAccount,
+                                    passwordAccount
+                                )
 
-                            //IF IS OKAY THEN
-                            navController.navigate(Routes.VAULT)
+                                if (result.isSuccess) {
+                                    navController.navigate(Routes.VAULT)
+                                } else {
+                                    println(result.exceptionOrNull()?.message)
+                                }
+                            }
                         },
                         modifier = Modifier
                             .align(Alignment.End)
