@@ -22,6 +22,8 @@ class SessionUseCaseImpl(
     ): Result<Unit> {
         when (func) {
             "register" -> {
+                sessionRepository.clearSession()
+
                 val id = userRepository.getUserId(email)
 
                 if (id == null) {
@@ -33,7 +35,15 @@ class SessionUseCaseImpl(
                 sessionRepository.saveUser(id, email)
             }
             "login" -> {
+                sessionRepository.clearSession()
+
                 val id = userRepository.getUserId(email)
+
+                if (id == null) {
+                    return Result.failure(
+                        Exception("User not found")
+                    )
+                }
 
                 sessionRepository.saveUser(id, email)
             }
