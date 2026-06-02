@@ -12,7 +12,7 @@ interface NoteEntryDao {
     suspend fun createNote(entry: NoteEntryEntity)
 
     @Delete
-    suspend fun deleteNote(id: Long)
+    suspend fun deleteNote(entry: NoteEntryEntity)
 
     @Query("SELECT * FROM note_entries WHERE userId = :userId")
     suspend fun getAllNotes(userId: Long): List<NoteEntryEntity>

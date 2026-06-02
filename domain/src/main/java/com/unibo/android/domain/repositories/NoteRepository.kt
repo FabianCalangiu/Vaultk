@@ -4,8 +4,5 @@ import com.unibo.android.domain.models.NoteEntryModel
 
 interface NoteRepository {
     suspend fun createNote(noteEntry: NoteEntryModel)
-
-    suspend fun deleteNote(id: Long)
-
-    suspend fun getAllNotes(userId: Long)
+    suspend fun getAllNotes(userId: Long): List<NoteEntryModel>
 }

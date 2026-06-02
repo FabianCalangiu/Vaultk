@@ -30,21 +30,10 @@ import com.unibo.android.uicompose.navigation.Routes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-fun onCreate(title: String, content: String, navController: NavController,  scope: CoroutineScope) {
-    scope.launch {
-        val addNoteEntryUseCase = UseCasesProvider.addNoteEntryUseCase
-
-        val addNoteResult = addNoteEntryUseCase(title, content)
-
-        if(addNoteResult.isSuccess) {
-            navController.navigate(Routes.VAULT)
-        }
-    }
-}
 @Composable
 fun CreateNoteScreen(navController: NavController) {
 
-    val coroutineScope = rememberCoroutineScope()
+    val scope = rememberCoroutineScope()
 
     var noteTitle by remember {
         mutableStateOf("")
@@ -100,10 +89,18 @@ fun CreateNoteScreen(navController: NavController) {
 
                 Button(
                     onClick = {
-                        if(noteText.isNotBlank() && noteTitle.isNotBlank()) {
-                            onCreate(noteTitle, noteText, navController, coroutineScope)
-                        }
+                        scope.launch {
+                            val result = UseCasesProvider.addNoteEntryUseCase(
+                                noteTitle,
+                                noteText
+                            )
 
+                            if(result.isSuccess) {
+                                navController.navigate(Routes.VAULT)
+                            } else {
+                                println(result.exceptionOrNull()?.message)
+                            }
+                        }
                     },
                     modifier = Modifier
                         .align(Alignment.End)
