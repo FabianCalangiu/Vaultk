@@ -23,7 +23,5 @@ data class NoteEntryEntity (
     val id: Long = 0,
     val title: String,
     val content: String,
-
-    //Foreign Key
     val userId: Long
 )

@@ -25,12 +25,6 @@ class SessionImpl(
             preferences[USER_ID] = userId
             preferences[USER_EMAIL] = email
         }
-
-        context.dataStore.edit { preferences ->
-            println("Datastore values:")
-            println(preferences[USER_ID])
-            println(preferences[USER_EMAIL])
-        }
     }
 
     override suspend fun saveUserEmail(email: String) {
