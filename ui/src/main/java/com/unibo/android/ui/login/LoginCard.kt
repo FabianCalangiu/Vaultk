@@ -115,7 +115,7 @@ fun LoginCard(
                     email = it
                 },
                 label = {
-                    Text("Insert email")
+                    Text("Insert e-mail")
                 },
                 modifier = Modifier
                     .fillMaxWidth()
