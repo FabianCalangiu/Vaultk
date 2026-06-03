@@ -1,9 +1,8 @@
 package com.unibo.android.ui.vault
 
-import NoteEntryCard
+import com.unibo.android.ui.notes.NoteEntryCard
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -28,7 +27,6 @@ import com.unibo.android.domain.di.UseCasesProvider
 import com.unibo.android.domain.models.NoteEntryModel
 import com.unibo.android.ui.accounts.AccountEntryCard
 import com.unibo.android.ui.common.EntryCard
-import androidx.compose.ui.window.Dialog
 
 @Composable
 fun VaultScreen(navController: NavController) {
