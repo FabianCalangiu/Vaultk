@@ -43,5 +43,17 @@ class AccountRepositoryImpl(context: Context) : AccountRepository {
             )
         )
     }
+
+    override suspend fun updateEntry(entry: AccountEntryModel) {
+        accountEntryDao.updateEntry(
+            AccountEntryEntity(
+                id = entry.id,
+                title = entry.title,
+                email = entry.email,
+                password = entry.password,
+                userId = entry.userId
+            )
+        )
+    }
 }
 

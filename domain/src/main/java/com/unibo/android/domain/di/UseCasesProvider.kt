@@ -17,6 +17,8 @@ import com.unibo.android.domain.usecases.RegisterUseCase
 import com.unibo.android.domain.usecases.RegisterUseCaseImpl
 import com.unibo.android.domain.usecases.SessionUseCase
 import com.unibo.android.domain.usecases.SessionUseCaseImpl
+import com.unibo.android.domain.usecases.UpdateAccountUseCase
+import com.unibo.android.domain.usecases.UpdateAccountUseCaseImpl
 
 import com.unibo.android.domain.usecases.getAccountsUseCaseImpl
 
@@ -29,9 +31,11 @@ object UseCasesProvider {
     lateinit var getNotesUseCase: GetNotesUseCase
     lateinit var createAccountUseCase: CreateAccountUseCase
     lateinit var getAccountsUseCase: GetAccountsUseCase
-    lateinit var deleteNoteUseCase: DeleteNoteUseCase
 
     lateinit var deleteAccountUseCase: DeleteAccountUseCase
+    lateinit var deleteNoteUseCase: DeleteNoteUseCase
+
+    lateinit var updateAccountUseCase: UpdateAccountUseCase
 
     fun setup(repositoryProvider: RepositoryProvider) {
         registerUseCase = RegisterUseCaseImpl(repositoryProvider.userRepository)
@@ -42,5 +46,7 @@ object UseCasesProvider {
         createAccountUseCase = CreateAccountUseCaseImpl(repositoryProvider.accountRepository, repositoryProvider.sessionRepository)
         getAccountsUseCase = getAccountsUseCaseImpl(repositoryProvider.accountRepository, repositoryProvider.sessionRepository)
         deleteNoteUseCase = DeleteNoteUseCaseImpl(repositoryProvider.noteRepository)
+        deleteAccountUseCase = DeleteAccountUseCaseImpl(repositoryProvider.accountRepository)
+        updateAccountUseCase = UpdateAccountUseCaseImpl(repositoryProvider.accountRepository)
     }
 }
