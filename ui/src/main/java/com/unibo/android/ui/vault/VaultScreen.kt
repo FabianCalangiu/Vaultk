@@ -21,8 +21,10 @@ import com.unibo.android.uicompose.navigation.Routes
 import kotlin.collections.emptyList
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.window.Dialog
 import com.unibo.android.domain.di.UseCasesProvider
 import com.unibo.android.domain.models.NoteEntryModel
+import com.unibo.android.ui.accounts.AccountEntryCard
 import com.unibo.android.ui.common.EntryCard
 
 @Composable
@@ -33,6 +35,10 @@ fun VaultScreen(navController: NavController) {
 
     var notes by remember {
         mutableStateOf<List<NoteEntryModel>>(emptyList())
+    }
+
+    var selectedAccount by remember {
+        mutableStateOf<AccountEntryModel?>(null)
     }
 
     val scrollState = rememberScrollState()
@@ -62,7 +68,7 @@ fun VaultScreen(navController: NavController) {
                     EntryCard(
                         title = accountEntry.title,
                         onClick = {
-                            // Yet to define
+                            selectedAccount = accountEntry
                         }
                     )
                 }
@@ -95,6 +101,21 @@ fun VaultScreen(navController: NavController) {
                     }
                 )
             }
+        }
+    }
+
+    selectedAccount?.let { account ->
+        Dialog(
+            onDismissRequest = {
+                selectedAccount = null
+            }
+        ) {
+            AccountEntryCard(
+                entry = account,
+                onClose = {
+                    selectedAccount = null
+                }
+            )
         }
     }
 }
