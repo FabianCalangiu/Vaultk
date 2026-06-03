@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -33,6 +35,8 @@ fun VaultScreen(navController: NavController) {
         mutableStateOf<List<NoteEntryModel>>(emptyList())
     }
 
+    val scrollState = rememberScrollState()
+
     LaunchedEffect(Unit) {
         accounts = UseCasesProvider.getAccountsUseCase()
         notes = UseCasesProvider.getNotesUseCase()
@@ -47,7 +51,8 @@ fun VaultScreen(navController: NavController) {
 
         Column(
             modifier = Modifier
-                .padding(16.dp),
+                .padding(16.dp)
+                .verticalScroll(scrollState),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             SectionCard(
