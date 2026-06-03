@@ -30,6 +30,10 @@ class CreateAccountUseCaseImpl(
                 return Result.failure(Exception("User not logged in"))
             }
 
+            if(title.isBlank() || email.isBlank() || password.isBlank()) {
+                return Result.failure(Exception("Cannot contains empty values"))
+            }
+
             accountRepository.createEntry(
                 AccountEntryModel(
                     id = 0,
