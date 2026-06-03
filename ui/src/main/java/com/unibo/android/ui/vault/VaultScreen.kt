@@ -1,7 +1,9 @@
 package com.unibo.android.ui.vault
 
+import NoteEntryCard
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -22,6 +24,7 @@ import androidx.compose.runtime.setValue
 import com.unibo.android.domain.di.UseCasesProvider
 import com.unibo.android.domain.models.NoteEntryModel
 import com.unibo.android.ui.common.EntryCard
+import androidx.compose.ui.window.Dialog
 
 @Composable
 fun VaultScreen(navController: NavController) {
@@ -33,12 +36,16 @@ fun VaultScreen(navController: NavController) {
         mutableStateOf<List<NoteEntryModel>>(emptyList())
     }
 
+    var selectedNote by remember {
+        mutableStateOf<NoteEntryModel?>(null)
+    }
+
     LaunchedEffect(Unit) {
         accounts = UseCasesProvider.getAccountsUseCase()
         notes = UseCasesProvider.getNotesUseCase()
     }
 
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
@@ -46,8 +53,7 @@ fun VaultScreen(navController: NavController) {
         Header("Vault")
 
         Column(
-            modifier = Modifier
-                .padding(16.dp),
+            modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             SectionCard(
@@ -74,11 +80,11 @@ fun VaultScreen(navController: NavController) {
             SectionCard(
                 title = "Notes"
             ) {
-                notes.forEach { notes ->
+                notes.forEach { note ->
                     EntryCard(
-                        title = notes.title,
+                        title = note.title,
                         onClick = {
-
+                            selectedNote = note
                         }
                     )
                 }
@@ -88,6 +94,18 @@ fun VaultScreen(navController: NavController) {
                     {
                         navController.navigate(Routes.INSERT_NOTES)
                     }
+                )
+            }
+        }
+        if (selectedNote != null) {
+            Dialog(
+                onDismissRequest = {
+                    selectedNote = null
+                }
+            ) {
+                NoteEntryCard(
+                    title = selectedNote!!.title,
+                    content = selectedNote!!.content
                 )
             }
         }

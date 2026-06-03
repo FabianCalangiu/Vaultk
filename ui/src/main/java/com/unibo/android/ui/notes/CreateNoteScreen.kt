@@ -90,7 +90,7 @@ fun CreateNoteScreen(navController: NavController) {
                 Button(
                     onClick = {
                         scope.launch {
-                            val result = UseCasesProvider.addNoteEntryUseCase(
+                            val result = UseCasesProvider.createNoteUseCase(
                                 noteTitle,
                                 noteText
                             )
