@@ -17,8 +17,9 @@ class NoteRepositoryImpl(context: Context) : NoteRepository {
         )
     }
 
-    override suspend fun deleteUser(noteEntry: NoteEntryModel) {
+    override suspend fun deleteNote(noteEntry: NoteEntryModel) {
         noteEntryDao.deleteNote(NoteEntryEntity(
+            id = noteEntry.id,
             title = noteEntry.title,
             content = noteEntry.content,
             userId = noteEntry.userId)

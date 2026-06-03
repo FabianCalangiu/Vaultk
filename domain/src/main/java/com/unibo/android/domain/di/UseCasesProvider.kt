@@ -29,7 +29,7 @@ object UseCasesProvider {
     lateinit var getNotesUseCase: GetNotesUseCase
     lateinit var createAccountUseCase: CreateAccountUseCase
     lateinit var getAccountsUseCase: GetAccountsUseCase
-    lateinit var deleteNoteEntry: DeleteNoteUseCase
+    lateinit var deleteNoteUseCase: DeleteNoteUseCase
 
     lateinit var deleteAccountUseCase: DeleteAccountUseCase
 
@@ -41,6 +41,6 @@ object UseCasesProvider {
         getNotesUseCase = GetNotesUseCaseImpl(repositoryProvider.noteRepository, repositoryProvider.sessionRepository)
         createAccountUseCase = CreateAccountUseCaseImpl(repositoryProvider.accountRepository, repositoryProvider.sessionRepository)
         getAccountsUseCase = getAccountsUseCaseImpl(repositoryProvider.accountRepository, repositoryProvider.sessionRepository)
-        deleteNoteEntry = DeleteNoteUseCaseImpl(repositoryProvider.noteRepository, repositoryProvider.sessionRepository)
+        deleteNoteUseCase = DeleteNoteUseCaseImpl(repositoryProvider.noteRepository)
     }
 }

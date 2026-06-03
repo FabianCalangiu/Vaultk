@@ -113,15 +113,26 @@ fun VaultScreen(navController: NavController) {
             }
         }
 
-        if (selectedNote != null) {
+        selectedNote?.let { note ->
+
             Dialog(
                 onDismissRequest = {
                     selectedNote = null
                 }
             ) {
                 NoteEntryCard(
-                    title = selectedNote!!.title,
-                    content = selectedNote!!.content
+                    entry = note,
+                    onDelete = {
+                        scope.launch {
+                            val result = UseCasesProvider.deleteNoteUseCase(note)
+                            if (result.isSuccess) {
+                                notes = UseCasesProvider.getNotesUseCase()
+                                selectedNote = null
+                            } else {
+                                println(result.exceptionOrNull()?.message)
+                            }
+                        }
+                    }
                 )
             }
         }
