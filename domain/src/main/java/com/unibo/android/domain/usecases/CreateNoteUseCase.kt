@@ -5,17 +5,17 @@ import com.unibo.android.domain.repositories.NoteRepository
 import com.unibo.android.domain.repositories.SessionRepository
 import kotlinx.coroutines.flow.first
 
-interface AddNoteEntryUseCase {
+interface CreateNoteUseCase {
     suspend operator fun invoke(
         title: String,
         content: String
     ): Result<Unit>
 }
 
-class AddNoteEntryUseCaseImpl(
+class CreateNoteUseCaseImpl (
     private val noteRepository: NoteRepository,
     private val sessionRepository: SessionRepository
-) : AddNoteEntryUseCase {
+) : CreateNoteUseCase {
     override suspend operator fun invoke(
         title: String,
         content: String

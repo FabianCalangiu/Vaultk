@@ -1,7 +1,9 @@
 package com.unibo.android.ui.vault
 
+import NoteEntryCard
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -28,6 +30,7 @@ import com.unibo.android.domain.models.NoteEntryModel
 import com.unibo.android.ui.accounts.AccountEntryCard
 import com.unibo.android.ui.common.EntryCard
 import kotlinx.coroutines.launch
+import androidx.compose.ui.window.Dialog
 
 @Composable
 fun VaultScreen(navController: NavController) {
@@ -37,6 +40,10 @@ fun VaultScreen(navController: NavController) {
 
     var notes by remember {
         mutableStateOf<List<NoteEntryModel>>(emptyList())
+    }
+
+    var selectedNote by remember {
+        mutableStateOf<NoteEntryModel?>(null)
     }
 
     var selectedAccount by remember {
@@ -89,11 +96,11 @@ fun VaultScreen(navController: NavController) {
             SectionCard(
                 title = "Notes"
             ) {
-                notes.forEach { notes ->
+                notes.forEach { note ->
                     EntryCard(
-                        title = notes.title,
+                        title = note.title,
                         onClick = {
-
+                            selectedNote = note
                         }
                     )
                 }
@@ -103,6 +110,19 @@ fun VaultScreen(navController: NavController) {
                     {
                         navController.navigate(Routes.INSERT_NOTES)
                     }
+                )
+            }
+        }
+
+        if (selectedNote != null) {
+            Dialog(
+                onDismissRequest = {
+                    selectedNote = null
+                }
+            ) {
+                NoteEntryCard(
+                    title = selectedNote!!.title,
+                    content = selectedNote!!.content
                 )
             }
         }
