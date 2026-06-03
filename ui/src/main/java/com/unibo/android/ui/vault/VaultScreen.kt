@@ -27,6 +27,9 @@ import com.unibo.android.domain.di.UseCasesProvider
 import com.unibo.android.domain.models.NoteEntryModel
 import com.unibo.android.ui.accounts.AccountEntryCard
 import com.unibo.android.ui.common.EntryCard
+import kotlinx.coroutines.launch
+import androidx.compose.ui.window.Dialog
+import androidx.compose.runtime.rememberCoroutineScope
 
 @Composable
 fun VaultScreen(navController: NavController) {
@@ -47,6 +50,8 @@ fun VaultScreen(navController: NavController) {
     }
 
     val scrollState = rememberScrollState()
+
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
         accounts = UseCasesProvider.getAccountsUseCase()
@@ -132,6 +137,17 @@ fun VaultScreen(navController: NavController) {
                 entry = account,
                 onClose = {
                     selectedAccount = null
+                },
+                onDelete = {
+                    scope.launch {
+                        val result = UseCasesProvider.deleteAccountUseCase(account)
+                        if (result.isSuccess) {
+                            accounts = UseCasesProvider.getAccountsUseCase()
+                            selectedAccount = null
+                        } else {
+                            println(result.exceptionOrNull()?.message)
+                        }
+                    }
                 }
             )
         }

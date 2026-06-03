@@ -2,6 +2,8 @@ package com.unibo.android.domain.di
 
 import com.unibo.android.domain.usecases.CreateAccountUseCase
 import com.unibo.android.domain.usecases.CreateAccountUseCaseImpl
+import com.unibo.android.domain.usecases.DeleteAccountUseCase
+import com.unibo.android.domain.usecases.DeleteAccountUseCaseImpl
 import com.unibo.android.domain.usecases.CreateNoteUseCase
 import com.unibo.android.domain.usecases.CreateNoteUseCaseImpl
 import com.unibo.android.domain.usecases.DeleteNoteUseCase
@@ -28,6 +30,8 @@ object UseCasesProvider {
     lateinit var createAccountUseCase: CreateAccountUseCase
     lateinit var getAccountsUseCase: GetAccountsUseCase
     lateinit var deleteNoteEntry: DeleteNoteUseCase
+
+    lateinit var deleteAccountUseCase: DeleteAccountUseCase
 
     fun setup(repositoryProvider: RepositoryProvider) {
         registerUseCase = RegisterUseCaseImpl(repositoryProvider.userRepository)
