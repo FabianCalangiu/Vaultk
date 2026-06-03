@@ -132,6 +132,17 @@ fun VaultScreen(navController: NavController) {
                                 println(result.exceptionOrNull()?.message)
                             }
                         }
+                    },
+                    onUpdate = { entry ->
+                        scope.launch {
+                            val result = UseCasesProvider.updateNoteUseCase(entry)
+                            if (result.isSuccess) {
+                                notes = UseCasesProvider.getNotesUseCase()
+                                selectedNote = entry
+                            } else {
+                                println(result.exceptionOrNull()?.message)
+                            }
+                        }
                     }
                 )
             }
