@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -21,8 +23,10 @@ import com.unibo.android.uicompose.navigation.Routes
 import kotlin.collections.emptyList
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.window.Dialog
 import com.unibo.android.domain.di.UseCasesProvider
 import com.unibo.android.domain.models.NoteEntryModel
+import com.unibo.android.ui.accounts.AccountEntryCard
 import com.unibo.android.ui.common.EntryCard
 import androidx.compose.ui.window.Dialog
 
@@ -40,12 +44,18 @@ fun VaultScreen(navController: NavController) {
         mutableStateOf<NoteEntryModel?>(null)
     }
 
+    var selectedAccount by remember {
+        mutableStateOf<AccountEntryModel?>(null)
+    }
+
+    val scrollState = rememberScrollState()
+
     LaunchedEffect(Unit) {
         accounts = UseCasesProvider.getAccountsUseCase()
         notes = UseCasesProvider.getNotesUseCase()
     }
 
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
@@ -53,7 +63,9 @@ fun VaultScreen(navController: NavController) {
         Header("Vault")
 
         Column(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier
+                .padding(16.dp)
+                .verticalScroll(scrollState),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             SectionCard(
@@ -63,7 +75,7 @@ fun VaultScreen(navController: NavController) {
                     EntryCard(
                         title = accountEntry.title,
                         onClick = {
-                            // Yet to define
+                            selectedAccount = accountEntry
                         }
                     )
                 }
@@ -97,6 +109,7 @@ fun VaultScreen(navController: NavController) {
                 )
             }
         }
+
         if (selectedNote != null) {
             Dialog(
                 onDismissRequest = {
@@ -108,6 +121,21 @@ fun VaultScreen(navController: NavController) {
                     content = selectedNote!!.content
                 )
             }
+        }
+    }
+
+    selectedAccount?.let { account ->
+        Dialog(
+            onDismissRequest = {
+                selectedAccount = null
+            }
+        ) {
+            AccountEntryCard(
+                entry = account,
+                onClose = {
+                    selectedAccount = null
+                }
+            )
         }
     }
 }
