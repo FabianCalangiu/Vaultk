@@ -31,5 +31,17 @@ class AccountRepositoryImpl(context: Context) : AccountRepository {
             )
         }
     }
+
+    override suspend fun deleteEntry(entry: AccountEntryModel) {
+        accountEntryDao.deleteEntry(
+            AccountEntryEntity(
+                id = entry.id,
+                title = entry.title,
+                email = entry.email,
+                password = entry.password,
+                userId = entry.userId
+            )
+        )
+    }
 }
 
