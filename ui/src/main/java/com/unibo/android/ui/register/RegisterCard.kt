@@ -13,97 +13,37 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.unibo.android.domain.di.UseCasesProvider
 import com.unibo.android.uicompose.navigation.Routes
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
-
-fun onSubmit(
-    email: String,
-    password: String,
-    navController: NavController,
-    scope: CoroutineScope
-) {
-    scope.launch {
-
-        val registerUseCase = UseCasesProvider.registerUseCase
-
-        val sessionUseCase = UseCasesProvider.sessionUseCase
-
-        val registerResult =
-            registerUseCase(
-                email,
-                password
-            )
-
-        if (registerResult.isSuccess) {
-
-            val sessionResult =
-                sessionUseCase(
-                    email,
-                    "register"
-                )
-
-            if (sessionResult.isSuccess) {
-
-                navController.navigate(
-                    Routes.VAULT
-                ) {
-                    popUpTo(
-                        Routes.FORM_REGISTER
-                    ) {
-                        inclusive = true
-                    }
-                }
-
-            } else {
-
-                println(
-                    sessionResult
-                        .exceptionOrNull()
-                        ?.message
-                )
-            }
-
-        } else {
-
-            println(
-                registerResult
-                    .exceptionOrNull()
-                    ?.message
-            )
-        }
-    }
-}
 
 @Composable
 fun RegisterCard(
-    navController: NavController
+    navController: NavController,
+    viewModel: RegisterViewModel = viewModel()
 ) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    val coroutineScope = rememberCoroutineScope()
-
-    var email by remember {
-        mutableStateOf("")
-    }
-
-    var password by remember {
-        mutableStateOf("")
-    }
-
-    var confirmPassword by remember {
-        mutableStateOf("")
+    LaunchedEffect(Unit) {
+        viewModel.events.collect { event ->
+            when (event) {
+                RegisterEvent.NavigateToVault -> {
+                    navController.navigate(Routes.VAULT) {
+                        popUpTo(Routes.FORM_REGISTER) {
+                            inclusive = true
+                        }
+                    }
+                }
+            }
+        }
     }
 
     Box(
@@ -136,7 +76,6 @@ fun RegisterCard(
                             }
                         }
                 )
-
                 Text(
                     text = "REGISTER",
                     color = MaterialTheme.colorScheme.onBackground,
@@ -144,53 +83,41 @@ fun RegisterCard(
                     fontWeight = FontWeight.Bold
                 )
             }
+
             OutlinedTextField(
-                value = email,
-                onValueChange = {
-                    email = it
-                },
+                value = uiState.email,
+                onValueChange = viewModel::onEmailChange,
                 label = {
                     Text("Insert e-mail")
-                },
+                        },
                 modifier = Modifier
                     .fillMaxWidth()
             )
 
             OutlinedTextField(
-                value = password,
-                onValueChange = {
-                    password = it
-                },
+                value = uiState.password,
+                onValueChange = viewModel::onPasswordChange,
                 label = {
                     Text("Insert password")
-                },
+                        },
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier
                     .fillMaxWidth()
             )
 
             OutlinedTextField(
-                value = confirmPassword,
-                onValueChange = {
-                    confirmPassword = it
-                },
+                value = uiState.confirmPassword,
+                onValueChange = viewModel::onConfirmPasswordChange,
                 label = {
                     Text("Confirm password")
-                },
+                        },
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier
                     .fillMaxWidth()
             )
 
             Button(
-                onClick = {
-                    if(email.isNotBlank() && password.isNotBlank() && confirmPassword.isNotBlank()) {
-                        if(password == confirmPassword) {
-                            onSubmit(email, password, navController, coroutineScope)
-                        }
-
-                    }
-                },
+                onClick = viewModel::onSubmit,
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
