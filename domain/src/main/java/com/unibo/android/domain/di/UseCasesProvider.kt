@@ -6,6 +6,8 @@ import com.unibo.android.domain.usecases.DeleteAccountUseCase
 import com.unibo.android.domain.usecases.DeleteAccountUseCaseImpl
 import com.unibo.android.domain.usecases.CreateNoteUseCase
 import com.unibo.android.domain.usecases.CreateNoteUseCaseImpl
+import com.unibo.android.domain.usecases.DeleteNoteUseCase
+import com.unibo.android.domain.usecases.DeleteNoteUseCaseImpl
 import com.unibo.android.domain.usecases.GetAccountsUseCase
 import com.unibo.android.domain.usecases.GetNotesUseCase
 import com.unibo.android.domain.usecases.GetNotesUseCaseImpl
@@ -17,6 +19,8 @@ import com.unibo.android.domain.usecases.SessionUseCase
 import com.unibo.android.domain.usecases.SessionUseCaseImpl
 import com.unibo.android.domain.usecases.UpdateAccountUseCase
 import com.unibo.android.domain.usecases.UpdateAccountUseCaseImpl
+import com.unibo.android.domain.usecases.UpdateNoteUseCase
+import com.unibo.android.domain.usecases.UpdateNoteUseCaseImpl
 
 import com.unibo.android.domain.usecases.getAccountsUseCaseImpl
 
@@ -31,8 +35,10 @@ object UseCasesProvider {
     lateinit var getAccountsUseCase: GetAccountsUseCase
 
     lateinit var deleteAccountUseCase: DeleteAccountUseCase
+    lateinit var deleteNoteUseCase: DeleteNoteUseCase
 
     lateinit var updateAccountUseCase: UpdateAccountUseCase
+    lateinit var updateNoteUseCase: UpdateNoteUseCase
 
     fun setup(repositoryProvider: RepositoryProvider) {
         registerUseCase = RegisterUseCaseImpl(repositoryProvider.userRepository)
@@ -42,7 +48,9 @@ object UseCasesProvider {
         getNotesUseCase = GetNotesUseCaseImpl(repositoryProvider.noteRepository, repositoryProvider.sessionRepository)
         createAccountUseCase = CreateAccountUseCaseImpl(repositoryProvider.accountRepository, repositoryProvider.sessionRepository, repositoryProvider.cryptoManager)
         getAccountsUseCase = getAccountsUseCaseImpl(repositoryProvider.accountRepository, repositoryProvider.sessionRepository)
+        deleteNoteUseCase = DeleteNoteUseCaseImpl(repositoryProvider.noteRepository)
         deleteAccountUseCase = DeleteAccountUseCaseImpl(repositoryProvider.accountRepository)
         updateAccountUseCase = UpdateAccountUseCaseImpl(repositoryProvider.accountRepository)
+        updateNoteUseCase = UpdateNoteUseCaseImpl(repositoryProvider.noteRepository)
     }
 }

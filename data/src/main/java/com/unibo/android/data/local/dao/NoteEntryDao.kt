@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import com.unibo.android.data.local.entity.NoteEntryEntity
 
 @Dao
@@ -16,4 +17,7 @@ interface NoteEntryDao {
 
     @Query("SELECT * FROM note_entries WHERE userId = :userId")
     suspend fun getAllNotes(userId: Long): List<NoteEntryEntity>
+    
+    @Update
+    suspend fun updateNote(entry: NoteEntryEntity)
 }

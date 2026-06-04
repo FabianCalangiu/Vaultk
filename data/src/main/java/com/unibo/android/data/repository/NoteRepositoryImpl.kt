@@ -17,6 +17,24 @@ class NoteRepositoryImpl(context: Context) : NoteRepository {
         )
     }
 
+    override suspend fun deleteNote(noteEntry: NoteEntryModel) {
+        noteEntryDao.deleteNote(NoteEntryEntity(
+            id = noteEntry.id,
+            title = noteEntry.title,
+            content = noteEntry.content,
+            userId = noteEntry.userId)
+        )
+    }
+
+    override suspend fun updateNote(noteEntry: NoteEntryModel) {
+        noteEntryDao.updateNote(NoteEntryEntity(
+            id = noteEntry.id,
+            title = noteEntry.title,
+            content = noteEntry.content,
+            userId = noteEntry.userId)
+        )
+    }
+
     override suspend fun getAllNotes(userId: Long): List<NoteEntryModel> {
         return noteEntryDao.getAllNotes(userId).map { entity ->
             NoteEntryModel(

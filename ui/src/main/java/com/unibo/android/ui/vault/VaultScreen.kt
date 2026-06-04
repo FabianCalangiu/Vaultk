@@ -1,9 +1,8 @@
 package com.unibo.android.ui.vault
 
-import NoteEntryCard
+import com.unibo.android.ui.notes.NoteEntryCard
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -22,7 +21,6 @@ import com.unibo.android.ui.common.Header
 import com.unibo.android.uicompose.navigation.Routes
 import kotlin.collections.emptyList
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.window.Dialog
 import com.unibo.android.domain.di.UseCasesProvider
@@ -31,6 +29,7 @@ import com.unibo.android.ui.accounts.AccountEntryCard
 import com.unibo.android.ui.common.EntryCard
 import kotlinx.coroutines.launch
 import androidx.compose.ui.window.Dialog
+import androidx.compose.runtime.rememberCoroutineScope
 
 @Composable
 fun VaultScreen(navController: NavController) {
@@ -114,15 +113,37 @@ fun VaultScreen(navController: NavController) {
             }
         }
 
-        if (selectedNote != null) {
+        selectedNote?.let { note ->
+
             Dialog(
                 onDismissRequest = {
                     selectedNote = null
                 }
             ) {
                 NoteEntryCard(
-                    title = selectedNote!!.title,
-                    content = selectedNote!!.content
+                    entry = note,
+                    onDelete = {
+                        scope.launch {
+                            val result = UseCasesProvider.deleteNoteUseCase(note)
+                            if (result.isSuccess) {
+                                notes = UseCasesProvider.getNotesUseCase()
+                                selectedNote = null
+                            } else {
+                                println(result.exceptionOrNull()?.message)
+                            }
+                        }
+                    },
+                    onUpdate = { entry ->
+                        scope.launch {
+                            val result = UseCasesProvider.updateNoteUseCase(entry)
+                            if (result.isSuccess) {
+                                notes = UseCasesProvider.getNotesUseCase()
+                                selectedNote = entry
+                            } else {
+                                println(result.exceptionOrNull()?.message)
+                            }
+                        }
+                    }
                 )
             }
         }
