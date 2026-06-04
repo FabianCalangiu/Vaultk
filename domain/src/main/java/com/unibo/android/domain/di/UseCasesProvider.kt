@@ -40,7 +40,7 @@ object UseCasesProvider {
         sessionUseCase = SessionUseCaseImpl(repositoryProvider.sessionRepository, repositoryProvider.userRepository)
         createNoteUseCase = CreateNoteUseCaseImpl(repositoryProvider.noteRepository, repositoryProvider.sessionRepository)
         getNotesUseCase = GetNotesUseCaseImpl(repositoryProvider.noteRepository, repositoryProvider.sessionRepository)
-        createAccountUseCase = CreateAccountUseCaseImpl(repositoryProvider.accountRepository, repositoryProvider.sessionRepository)
+        createAccountUseCase = CreateAccountUseCaseImpl(repositoryProvider.accountRepository, repositoryProvider.sessionRepository, repositoryProvider.cryptoManager)
         getAccountsUseCase = getAccountsUseCaseImpl(repositoryProvider.accountRepository, repositoryProvider.sessionRepository)
         deleteAccountUseCase = DeleteAccountUseCaseImpl(repositoryProvider.accountRepository)
         updateAccountUseCase = UpdateAccountUseCaseImpl(repositoryProvider.accountRepository)
