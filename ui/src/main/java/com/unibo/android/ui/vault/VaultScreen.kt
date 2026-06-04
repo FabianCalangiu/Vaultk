@@ -10,53 +10,26 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import com.unibo.android.domain.models.AccountEntryModel
-import com.unibo.android.ui.common.Header
-import com.unibo.android.uicompose.navigation.Routes
-import kotlin.collections.emptyList
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.window.Dialog
-import com.unibo.android.domain.di.UseCasesProvider
-import com.unibo.android.domain.models.NoteEntryModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.unibo.android.ui.accounts.AccountEntryCard
 import com.unibo.android.ui.common.EntryCard
-import kotlinx.coroutines.launch
-import androidx.compose.ui.window.Dialog
-import androidx.compose.runtime.rememberCoroutineScope
+import com.unibo.android.ui.common.Header
+import com.unibo.android.uicompose.navigation.Routes
 
 @Composable
-fun VaultScreen(navController: NavController) {
-    var accounts by remember {
-        mutableStateOf<List<AccountEntryModel>>(emptyList())
-    }
-
-    var notes by remember {
-        mutableStateOf<List<NoteEntryModel>>(emptyList())
-    }
-
-    var selectedNote by remember {
-        mutableStateOf<NoteEntryModel?>(null)
-    }
-
-    var selectedAccount by remember {
-        mutableStateOf<AccountEntryModel?>(null)
-    }
+fun VaultScreen(
+    navController: NavController,
+    viewModel: VaultViewModel = viewModel()
+) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     val scrollState = rememberScrollState()
-
-    val scope = rememberCoroutineScope()
-
-    LaunchedEffect(Unit) {
-        accounts = UseCasesProvider.getAccountsUseCase()
-        notes = UseCasesProvider.getNotesUseCase()
-    }
 
     Column(
         modifier = Modifier
@@ -71,116 +44,71 @@ fun VaultScreen(navController: NavController) {
                 .verticalScroll(scrollState),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            SectionCard(
-                title = "Accounts"
-            ) {
-                accounts.forEach { accountEntry ->
+            SectionCard(title = "Accounts") {
+                uiState.accounts.forEach { accountEntry ->
                     EntryCard(
                         title = accountEntry.title,
                         onClick = {
-                            selectedAccount = accountEntry
+                            viewModel.onSelectAccount(accountEntry)
                         }
                     )
                 }
-
-
                 AddEntryCard(
                     text = "New Entry",
-                    {
+                    onClick = {
                         navController.navigate(Routes.INSERT_ACCOUNTS)
                     }
                 )
             }
 
-            SectionCard(
-                title = "Notes"
-            ) {
-                notes.forEach { note ->
+            SectionCard(title = "Notes") {
+                uiState.notes.forEach { note ->
                     EntryCard(
                         title = note.title,
                         onClick = {
-                            selectedNote = note
+                            viewModel.onSelectNote(note)
                         }
                     )
                 }
-
                 AddEntryCard(
                     text = "New Secure Note",
-                    {
+                    onClick = {
                         navController.navigate(Routes.INSERT_NOTES)
                     }
                 )
             }
         }
 
-        selectedNote?.let { note ->
-
-            Dialog(
-                onDismissRequest = {
-                    selectedNote = null
-                }
-            ) {
+        uiState.selectedNote?.let { note ->
+            Dialog(onDismissRequest = {
+                viewModel.onSelectNote(null) })
+            {
                 NoteEntryCard(
                     entry = note,
                     onDelete = {
-                        scope.launch {
-                            val result = UseCasesProvider.deleteNoteUseCase(note)
-                            if (result.isSuccess) {
-                                notes = UseCasesProvider.getNotesUseCase()
-                                selectedNote = null
-                            } else {
-                                println(result.exceptionOrNull()?.message)
-                            }
-                        }
-                    },
-                    onUpdate = { entry ->
-                        scope.launch {
-                            val result = UseCasesProvider.updateNoteUseCase(entry)
-                            if (result.isSuccess) {
-                                notes = UseCasesProvider.getNotesUseCase()
-                                selectedNote = entry
-                            } else {
-                                println(result.exceptionOrNull()?.message)
-                            }
-                        }
+                        viewModel.onDeleteNote(note)
+                               },
+                    onUpdate = {
+                        entry -> viewModel.onUpdateNote(entry)
                     }
                 )
             }
         }
     }
 
-    selectedAccount?.let { account ->
-        Dialog(
-            onDismissRequest = {
-                selectedAccount = null
-            }
-        ) {
+    uiState.selectedAccount?.let {
+        account ->
+        Dialog(onDismissRequest = { viewModel.onSelectAccount(null) }) {
             AccountEntryCard(
                 entry = account,
                 onClose = {
-                    selectedAccount = null
-                },
+                    viewModel.onSelectAccount(null)
+                          },
                 onDelete = {
-                    scope.launch {
-                        val result = UseCasesProvider.deleteAccountUseCase(account)
-                        if (result.isSuccess) {
-                            accounts = UseCasesProvider.getAccountsUseCase()
-                            selectedAccount = null
-                        } else {
-                            println(result.exceptionOrNull()?.message)
-                        }
-                    }
-                },
-                onUpdate = { updatedEntry ->
-                    scope.launch {
-                        val result = UseCasesProvider.updateAccountUseCase(updatedEntry)
-                        if (result.isSuccess) {
-                            accounts = UseCasesProvider.getAccountsUseCase()
-                            selectedAccount = updatedEntry
-                        } else {
-                            println(result.exceptionOrNull()?.message)
-                        }
-                    }
+                    viewModel.onDeleteAccount(account)
+                           },
+                onUpdate = {
+                    updatedEntry -> viewModel.onUpdateAccount(updatedEntry)
                 }
             )
         }

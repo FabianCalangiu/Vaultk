@@ -26,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,19 +49,19 @@ fun AccountEntryCard(
 
     val scrollState = rememberScrollState()
 
-    var editMode by remember {
+    var editMode by rememberSaveable  {
         mutableStateOf(false)
     }
 
-    var title by remember {
+    var title by rememberSaveable  {
         mutableStateOf(entry.title)
     }
 
-    var email by remember {
+    var email by rememberSaveable  {
         mutableStateOf(entry.email)
     }
 
-    var password by remember {
+    var password by rememberSaveable  {
         mutableStateOf(entry.password)
     }
 
