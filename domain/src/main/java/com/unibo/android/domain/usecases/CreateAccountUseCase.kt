@@ -26,6 +26,8 @@ class CreateAccountUseCaseImpl(
     ): Result<Unit> {
         val NULL: Long = 0
 
+        val encryptedPassword = cryptoManager.encrypt(password)
+
         try {
             val userId = sessionRepository.getUserId().first()
             if (userId == NULL) {
@@ -41,7 +43,7 @@ class CreateAccountUseCaseImpl(
                     id = 0,
                     title = title,
                     email = email,
-                    password = password,
+                    password = encryptedPassword,
                     userId = userId
                 )
             )
