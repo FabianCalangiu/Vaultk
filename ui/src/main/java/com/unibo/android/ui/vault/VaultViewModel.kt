@@ -34,8 +34,16 @@ class VaultViewModel : ViewModel() {
         }
     }
 
-    fun onSelectNote(note: NoteEntryModel?) = _uiState.update { it.copy(selectedNote = note) }
-    fun onSelectAccount(account: AccountEntryModel?) = _uiState.update { it.copy(selectedAccount = account) }
+    fun onSelectNote(note: NoteEntryModel?) {
+        _uiState.update {
+            it.copy(selectedNote = note)
+        }
+    }
+    fun onSelectAccount(account: AccountEntryModel?) {
+        _uiState.update {
+            it.copy(selectedAccount = account)
+        }
+    }
 
     fun onDeleteNote(note: NoteEntryModel) {
         viewModelScope.launch {

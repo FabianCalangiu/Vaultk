@@ -81,8 +81,8 @@ fun VaultScreen(
 
         uiState.selectedNote?.let { note ->
             Dialog(onDismissRequest = {
-                viewModel.onSelectNote(null) })
-            {
+                viewModel.onSelectNote(null)
+            }) {
                 NoteEntryCard(
                     entry = note,
                     onDelete = {
@@ -98,7 +98,9 @@ fun VaultScreen(
 
     uiState.selectedAccount?.let {
         account ->
-        Dialog(onDismissRequest = { viewModel.onSelectAccount(null) }) {
+        Dialog(onDismissRequest = {
+            viewModel.onSelectAccount(null)
+        }) {
             AccountEntryCard(
                 entry = account,
                 onClose = {
