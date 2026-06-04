@@ -13,37 +13,35 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
-import com.unibo.android.ui.common.Header
-import com.unibo.android.uicompose.navigation.Routes
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import com.unibo.android.domain.di.UseCasesProvider
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import com.unibo.android.ui.common.Header
 import com.unibo.android.ui.theme.Header
-import kotlinx.coroutines.launch
+import com.unibo.android.uicompose.navigation.Routes
 
 @Composable
-fun CreateAccScreen(navController: NavController) {
-    var accountTitle by remember {
-        mutableStateOf("")
-    }
+fun CreateAccScreen(
+    navController: NavController,
+    viewModel: CreateAccViewModel = viewModel()
+) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    var emailAccount by remember {
-        mutableStateOf("")
+    LaunchedEffect(Unit) {
+        viewModel.events.collect { event ->
+            when (event) {
+                CreateAccEvent.NavigateToVault -> {
+                    navController.navigate(Routes.VAULT)
+                }
+            }
+        }
     }
-
-    var passwordAccount by remember {
-        mutableStateOf("")
-    }
-
-    val scope = rememberCoroutineScope()
 
     Column(
         modifier = Modifier
@@ -63,77 +61,53 @@ fun CreateAccScreen(navController: NavController) {
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-
                 OutlinedTextField(
-                    value = accountTitle,
-                    onValueChange = {
-                        accountTitle = it
-                    },
+                    value = uiState.accountTitle,
+                    onValueChange = viewModel::onAccountTitleChange,
                     label = {
                         Text("Insert title")
-                    },
+                            },
                     modifier = Modifier
                         .fillMaxWidth()
                 )
 
                 OutlinedTextField(
-                    value = emailAccount,
-                    onValueChange = {
-                        emailAccount = it
-                    },
+                    value = uiState.emailAccount,
+                    onValueChange = viewModel::onEmailAccountChange,
                     label = {
                         Text("Insert e-mail/username")
-                    },
+                            },
                     modifier = Modifier
                         .fillMaxWidth()
                 )
 
                 OutlinedTextField(
-                    value = passwordAccount,
-                    onValueChange = {
-                        passwordAccount = it
-                    },
+                    value = uiState.passwordAccount,
+                    onValueChange = viewModel::onPasswordAccountChange,
                     label = {
                         Text("Insert password")
-                    },
+                            },
                     visualTransformation = PasswordVisualTransformation(),
                     modifier = Modifier
                         .fillMaxWidth()
                 )
 
                 Column(
-                    modifier = Modifier
-                        .fillMaxSize(),
+                    modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.SpaceBetween
                 ) {
                     Button(
                         onClick = {
                             navController.navigate(Routes.PASSWORD_GENERATOR)
-                        },
-                        modifier = Modifier
-                            .align(Alignment.End)
+                                  },
+                        modifier = Modifier.align(Alignment.End)
                     ) {
                         Text("Generate Password")
                     }
 
                     Button(
-                        onClick = {
-                            scope.launch {
-                                val result = UseCasesProvider.createAccountUseCase(
-                                    accountTitle,
-                                    emailAccount,
-                                    passwordAccount
-                                )
-
-                                if (result.isSuccess) {
-                                    navController.navigate(Routes.VAULT)
-                                } else {
-                                    println(result.exceptionOrNull()?.message)
-                                }
-                            }
-                        },
-                        modifier = Modifier
-                            .align(Alignment.End)
+                        onClick = viewModel::onSubmit,
+                        modifier = Modifier.align(Alignment.End)
                     ) {
                         Text("Create Account")
                     }
@@ -142,4 +116,3 @@ fun CreateAccScreen(navController: NavController) {
         }
     }
 }
-
