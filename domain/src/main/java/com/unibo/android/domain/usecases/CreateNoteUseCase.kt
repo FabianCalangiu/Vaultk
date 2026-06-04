@@ -3,6 +3,7 @@ package com.unibo.android.domain.usecases
 import com.unibo.android.domain.models.NoteEntryModel
 import com.unibo.android.domain.repositories.NoteRepository
 import com.unibo.android.domain.repositories.SessionRepository
+import com.unibo.android.domain.security.CryptoManager
 import kotlinx.coroutines.flow.first
 
 interface CreateNoteUseCase {
@@ -14,13 +15,16 @@ interface CreateNoteUseCase {
 
 class CreateNoteUseCaseImpl (
     private val noteRepository: NoteRepository,
-    private val sessionRepository: SessionRepository
+    private val sessionRepository: SessionRepository,
+    private val cryptoManager: CryptoManager
 ) : CreateNoteUseCase {
     override suspend operator fun invoke(
         title: String,
         content: String
     ): Result<Unit> {
         val NULL: Long = 0
+
+        val encryptedContent = cryptoManager.encrypt(content)
 
         return try {
             val userId = sessionRepository.getUserId().first()
@@ -36,7 +40,7 @@ class CreateNoteUseCaseImpl (
                 NoteEntryModel(
                     id = 0,
                     title = title,
-                    content = content,
+                    content = encryptedContent,
                     userId = userId
                 )
             )

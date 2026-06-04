@@ -4,6 +4,7 @@ import android.content.Context
 import com.unibo.android.data.repository.AccountRepositoryImpl
 import com.unibo.android.data.repository.NoteRepositoryImpl
 import com.unibo.android.data.repository.UserRepositoryImpl
+import com.unibo.android.data.security.CryptoManagerImpl
 import com.unibo.android.data.session.SessionImpl
 import com.unibo.android.domain.di.RepositoryProvider
 import com.unibo.android.domain.repositories.AccountRepository
@@ -18,4 +19,5 @@ class RepositoryProviderImpl(
     override val sessionRepository: SessionRepository = SessionImpl(context)
     override val accountRepository: AccountRepository = AccountRepositoryImpl(context)
     override val noteRepository: NoteRepository = NoteRepositoryImpl(context)
+    override val cryptoManager = CryptoManagerImpl()
 }

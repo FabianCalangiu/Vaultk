@@ -3,6 +3,7 @@ package com.unibo.android.domain.usecases
 import com.unibo.android.domain.models.AccountEntryModel
 import com.unibo.android.domain.repositories.AccountRepository
 import com.unibo.android.domain.repositories.SessionRepository
+import com.unibo.android.domain.security.CryptoManager
 import kotlinx.coroutines.flow.first
 
 interface CreateAccountUseCase {
@@ -15,7 +16,8 @@ interface CreateAccountUseCase {
 
 class CreateAccountUseCaseImpl(
     private val accountRepository: AccountRepository,
-    private val sessionRepository: SessionRepository
+    private val sessionRepository: SessionRepository,
+    private val cryptoManager: CryptoManager
 ) : CreateAccountUseCase {
     override suspend operator fun invoke(
         title: String,
@@ -23,6 +25,8 @@ class CreateAccountUseCaseImpl(
         password: String
     ): Result<Unit> {
         val NULL: Long = 0
+
+        val encryptedPassword = cryptoManager.encrypt(password)
 
         try {
             val userId = sessionRepository.getUserId().first()
@@ -39,7 +43,7 @@ class CreateAccountUseCaseImpl(
                     id = 0,
                     title = title,
                     email = email,
-                    password = password,
+                    password = encryptedPassword,
                     userId = userId
                 )
             )
