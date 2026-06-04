@@ -1,6 +1,5 @@
 package com.unibo.android.data.security
 
-import android.hardware.biometrics.PromptContentItemPlainText
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import java.security.KeyStore
@@ -8,9 +7,10 @@ import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import android.util.Base64
+import com.unibo.android.domain.security.CryptoManager
 import javax.crypto.spec.GCMParameterSpec
 
-class CryptoManager {
+class CryptoManagerImpl : CryptoManager {
     private val keyAlias = "vaultk_secret_key"
 
     private val transformation = "AES/GCM/NoPadding"
@@ -43,7 +43,7 @@ class CryptoManager {
         return keyGenerator.generateKey()
     }
 
-    fun encrypt(plainText: String): String {
+    override fun encrypt(plainText: String): String {
         val cipher = Cipher.getInstance(transformation)
 
         cipher.init(
@@ -60,7 +60,7 @@ class CryptoManager {
         return Base64.encodeToString(combined, Base64.NO_WRAP)
     }
 
-    fun decrypt(encryptedText: String): String {
+    override fun decrypt(encryptedText: String): String {
         val combined = Base64.decode(encryptedText, Base64.NO_WRAP)
 
         val iv = combined.copyOfRange(0, 12)
