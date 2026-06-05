@@ -50,7 +50,8 @@ fun VaultScreen(
                         title = accountEntry.title,
                         onClick = {
                             viewModel.onSelectAccount(accountEntry)
-                        }
+                        },
+                        isPassword = uiState.accountBreachStatus[accountEntry]
                     )
                 }
                 AddEntryCard(
@@ -94,25 +95,25 @@ fun VaultScreen(
                 )
             }
         }
-    }
 
-    uiState.selectedAccount?.let {
-        account ->
-        Dialog(onDismissRequest = {
-            viewModel.onSelectAccount(null)
-        }) {
-            AccountEntryCard(
-                entry = account,
-                onClose = {
-                    viewModel.onSelectAccount(null)
-                          },
-                onDelete = {
-                    viewModel.onDeleteAccount(account)
-                           },
-                onUpdate = {
-                    updatedEntry -> viewModel.onUpdateAccount(updatedEntry)
-                }
-            )
+        uiState.selectedAccount?.let {
+                account ->
+            Dialog(onDismissRequest = {
+                viewModel.onSelectAccount(null)
+            }) {
+                AccountEntryCard(
+                    entry = account,
+                    onClose = {
+                        viewModel.onSelectAccount(null)
+                    },
+                    onDelete = {
+                        viewModel.onDeleteAccount(account)
+                    },
+                    onUpdate = {
+                            updatedEntry -> viewModel.onUpdateAccount(updatedEntry)
+                    }
+                )
+            }
         }
     }
 }

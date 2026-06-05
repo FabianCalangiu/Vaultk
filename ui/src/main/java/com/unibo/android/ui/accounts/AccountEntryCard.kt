@@ -32,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.unibo.android.domain.models.AccountEntryModel
@@ -141,7 +142,12 @@ fun AccountEntryCard(
                 ) {
                     Text(
                         text = password,
-                        style = MaterialTheme.typography.bodyLarge
+                        style = MaterialTheme.typography.bodyLarge,
+                        maxLines = 5,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(top = 10.dp)
                     )
 
                     IconButton(
@@ -177,25 +183,29 @@ fun AccountEntryCard(
                     )
                 }
 
-                Button(
-                    onClick = {
-                        onUpdate(
-                            entry.copy(
-                                title = title,
-                                email = email,
-                                password = password
+                if(editMode) {
+                    Button(
+                        onClick = {
+                            onUpdate(
+                                entry.copy(
+                                    title = title,
+                                    email = email,
+                                    password = password
+                                )
                             )
-                        )
-                        editMode = false
+                            editMode = false
+                        }
+                    ) {
+                        Text("Save")
                     }
-                ) {
-                    Text("Save")
                 }
 
-                Button(
-                    onClick = onDelete
-                ) {
-                    Text("Delete")
+                if(!editMode) {
+                    Button(
+                        onClick = onDelete
+                    ) {
+                        Text("Delete")
+                    }
                 }
             }
         }
