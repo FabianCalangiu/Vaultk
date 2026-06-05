@@ -1,5 +1,6 @@
 package com.unibo.android.ui.accounts
 
+import android.graphics.Outline
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,6 +18,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.node.ModifierNodeElement
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -77,6 +79,16 @@ fun CreateAccScreen(
                     label = {
                         Text("Insert e-mail/username")
                             },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+
+                OutlinedTextField(
+                    value = uiState.websiteAccount,
+                    onValueChange = viewModel::onWebsiteAccountChange,
+                    label = {
+                        Text("Insert website url: Ex. google.com")
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                 )

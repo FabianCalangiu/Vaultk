@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
 data class CreateAccUiState(
     val accountTitle: String = "",
     val emailAccount: String = "",
+    val websiteAccount: String = "",
     val passwordAccount: String = ""
 )
 
@@ -39,6 +40,12 @@ class CreateAccViewModel : ViewModel() {
             it.copy(emailAccount = value)
         }
     }
+
+    fun onWebsiteAccountChange(value: String) {
+        _uiState.update {
+            it.copy(websiteAccount = value)
+        }
+    }
     fun onPasswordAccountChange(value: String) {
         _uiState.update {
             it.copy(passwordAccount = value)
@@ -52,6 +59,7 @@ class CreateAccViewModel : ViewModel() {
             val result = UseCasesProvider.createAccountUseCase(
                 state.accountTitle,
                 state.emailAccount,
+                state.websiteAccount,
                 state.passwordAccount
             )
 

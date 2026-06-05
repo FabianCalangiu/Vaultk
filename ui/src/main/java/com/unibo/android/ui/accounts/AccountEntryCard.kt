@@ -61,6 +61,10 @@ fun AccountEntryCard(
         mutableStateOf(entry.email)
     }
 
+    var website by rememberSaveable {
+        mutableStateOf(entry.website)
+    }
+
     var password by rememberSaveable  {
         mutableStateOf(entry.password)
     }
@@ -113,6 +117,30 @@ fun AccountEntryCard(
             } else {
                 Text(
                     text = email,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+
+            Spacer(
+                modifier = Modifier.height(15.dp)
+            )
+
+            Text(
+                text = "Website",
+                fontSize = 19.sp,
+                modifier = Modifier.padding(bottom = 10.dp)
+            )
+
+            if (editMode) {
+                OutlinedTextField(
+                    value = website,
+                    onValueChange = {
+                        website = it
+                    }
+                )
+            } else {
+                Text(
+                    text = website,
                     style = MaterialTheme.typography.bodyLarge
                 )
             }
@@ -183,6 +211,7 @@ fun AccountEntryCard(
                             entry.copy(
                                 title = title,
                                 email = email,
+                                website = website,
                                 password = password
                             )
                         )

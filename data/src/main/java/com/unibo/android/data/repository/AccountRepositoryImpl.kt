@@ -14,6 +14,7 @@ class AccountRepositoryImpl(context: Context) : AccountRepository {
             AccountEntryEntity(
                 title = entry.title,
                 email = entry.email,
+                website = entry.website,
                 password = entry.password,
                 userId = entry.userId
             )
@@ -26,6 +27,7 @@ class AccountRepositoryImpl(context: Context) : AccountRepository {
                 id = entity.id,
                 title = entity.title,
                 email = entity.email,
+                website = entity.website,
                 password = entity.password,
                 userId = entity.userId
             )
@@ -38,6 +40,7 @@ class AccountRepositoryImpl(context: Context) : AccountRepository {
                 id = entry.id,
                 title = entry.title,
                 email = entry.email,
+                website = entry.website,
                 password = entry.password,
                 userId = entry.userId
             )
@@ -50,6 +53,7 @@ class AccountRepositoryImpl(context: Context) : AccountRepository {
                 id = entry.id,
                 title = entry.title,
                 email = entry.email,
+                website = entry.website,
                 password = entry.password,
                 userId = entry.userId
             )

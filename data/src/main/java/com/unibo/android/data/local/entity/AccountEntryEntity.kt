@@ -22,6 +22,7 @@ data class AccountEntryEntity(
     val id: Long = 0,
     val title: String,
     val email: String,
+    val website: String = "",
     val password: String,
     //Foreign Key
     val userId: Long

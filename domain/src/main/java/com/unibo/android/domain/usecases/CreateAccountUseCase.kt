@@ -10,6 +10,7 @@ interface CreateAccountUseCase {
     suspend operator fun invoke(
         title: String,
         email: String,
+        website: String,
         password: String
     ): Result<Unit>
 }
@@ -22,6 +23,7 @@ class CreateAccountUseCaseImpl(
     override suspend operator fun invoke(
         title: String,
         email: String,
+        website: String,
         password: String
     ): Result<Unit> {
         val NULL: Long = 0
@@ -35,7 +37,7 @@ class CreateAccountUseCaseImpl(
             }
 
             if(title.isBlank() || email.isBlank() || password.isBlank()) {
-                return Result.failure(Exception("Cannot contains empty values"))
+                return Result.failure(Exception("Cannot contain empty values"))
             }
 
             accountRepository.createEntry(
@@ -44,6 +46,7 @@ class CreateAccountUseCaseImpl(
                     title = title,
                     email = email,
                     password = encryptedPassword,
+                    website = website,
                     userId = userId
                 )
             )
