@@ -1,5 +1,7 @@
 package com.unibo.android.domain.di
 
+import com.unibo.android.domain.usecases.CheckPasswordBreachUseCase
+import com.unibo.android.domain.usecases.CheckPasswordBreachUseCaseImpl
 import com.unibo.android.domain.usecases.CreateAccountUseCase
 import com.unibo.android.domain.usecases.CreateAccountUseCaseImpl
 import com.unibo.android.domain.usecases.DeleteAccountUseCase
@@ -39,6 +41,7 @@ object UseCasesProvider {
 
     lateinit var updateAccountUseCase: UpdateAccountUseCase
     lateinit var updateNoteUseCase: UpdateNoteUseCase
+    lateinit var checkPasswordBreachUseCase: CheckPasswordBreachUseCase
 
     fun setup(repositoryProvider: RepositoryProvider) {
         registerUseCase = RegisterUseCaseImpl(repositoryProvider.userRepository)
@@ -52,5 +55,6 @@ object UseCasesProvider {
         deleteAccountUseCase = DeleteAccountUseCaseImpl(repositoryProvider.accountRepository)
         updateAccountUseCase = UpdateAccountUseCaseImpl(repositoryProvider.accountRepository, repositoryProvider.cryptoManager)
         updateNoteUseCase = UpdateNoteUseCaseImpl(repositoryProvider.noteRepository, repositoryProvider.cryptoManager)
+        checkPasswordBreachUseCase = CheckPasswordBreachUseCaseImpl(repositoryProvider.dataBreachRepository)
     }
 }
