@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -24,6 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.unibo.android.domain.models.NoteEntryModel
 import com.unibo.android.ui.theme.Surface
 
@@ -57,9 +59,21 @@ fun NoteEntryCard(
         ) {
 
             if (editMode) {
+                Text(
+                    text = "Title",
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontSize = 17.sp
+                )
+
                 OutlinedTextField(
                     value = title,
-                    onValueChange = { title = it }
+                    onValueChange = { title = it },
+                    modifier = Modifier.padding(bottom = 5.dp)
+                )
+                Text(
+                    text = "Content",
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontSize = 17.sp
                 )
 
                 OutlinedTextField(

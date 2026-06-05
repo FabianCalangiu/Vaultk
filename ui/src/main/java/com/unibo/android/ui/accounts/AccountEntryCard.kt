@@ -1,7 +1,5 @@
 package com.unibo.android.ui.accounts
 
-import android.content.ClipData
-import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -25,18 +22,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.unibo.android.domain.models.AccountEntryModel
 import com.unibo.android.ui.theme.Surface
-
 
 @Composable
 fun AccountEntryCard(
@@ -49,15 +44,15 @@ fun AccountEntryCard(
 
     val scrollState = rememberScrollState()
 
-    var editMode by rememberSaveable  {
+    var editMode by rememberSaveable {
         mutableStateOf(false)
     }
 
-    var title by rememberSaveable  {
+    var title by rememberSaveable {
         mutableStateOf(entry.title)
     }
 
-    var email by rememberSaveable  {
+    var email by rememberSaveable {
         mutableStateOf(entry.email)
     }
 
@@ -65,28 +60,33 @@ fun AccountEntryCard(
         mutableStateOf(entry.website)
     }
 
-    var password by rememberSaveable  {
+    var password by rememberSaveable {
         mutableStateOf(entry.password)
     }
 
+    var peekPassword by rememberSaveable {
+        mutableStateOf(false)
+    }
+
     Card(
-        colors = CardDefaults.cardColors(containerColor = Surface)
+        colors = CardDefaults.cardColors(
+            containerColor = Surface
+        )
     ) {
         Column(
-            modifier = Modifier.padding(30.dp)
+            modifier = Modifier
+                .padding(30.dp)
                 .verticalScroll(scrollState)
         ) {
-            if (editMode) {
 
+            if (editMode) {
                 OutlinedTextField(
                     value = title,
                     onValueChange = {
                         title = it
                     }
                 )
-
             } else {
-
                 Text(
                     text = title,
                     style = MaterialTheme.typography.titleLarge,
@@ -100,20 +100,18 @@ fun AccountEntryCard(
             )
 
             Text(
-                "Username / E-mail",
+                text = "Username / E-mail",
                 fontSize = 19.sp,
                 modifier = Modifier.padding(bottom = 10.dp)
             )
 
             if (editMode) {
-
                 OutlinedTextField(
                     value = email,
                     onValueChange = {
                         email = it
                     }
                 )
-
             } else {
                 Text(
                     text = email,
@@ -149,7 +147,10 @@ fun AccountEntryCard(
                 modifier = Modifier.height(15.dp)
             )
 
-            Text("Password", fontSize = 19.sp)
+            Text(
+                text = "Password",
+                fontSize = 19.sp
+            )
 
             if (editMode) {
 
@@ -164,12 +165,20 @@ fun AccountEntryCard(
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
+
                     Text(
-                        text = password,
-                        style = MaterialTheme.typography.bodyLarge
+                        text = if (peekPassword)
+                            password
+                        else
+                            "*".repeat(password.length),
+                        style = MaterialTheme.typography.bodyLarge,
+                        maxLines = 5,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(top = 10.dp)
                     )
 
                     IconButton(
@@ -181,22 +190,24 @@ fun AccountEntryCard(
                     ) {
                         Icon(
                             imageVector = Icons.Default.ContentCopy,
-                            contentDescription = "Copy"
+                            contentDescription = "Copy password"
                         )
                     }
                 }
             }
 
             Row(
-                modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
+
                 Button(
                     onClick = {
                         editMode = !editMode
                     }
                 ) {
-
                     Text(
                         if (editMode)
                             "Cancel"
@@ -205,26 +216,44 @@ fun AccountEntryCard(
                     )
                 }
 
-                Button(
-                    onClick = {
-                        onUpdate(
-                            entry.copy(
-                                title = title,
-                                email = email,
-                                website = website,
-                                password = password
-                            )
-                        )
-                        editMode = false
-                    }
-                ) {
-                    Text("Save")
-                }
+                if (editMode) {
 
-                Button(
-                    onClick = onDelete
-                ) {
-                    Text("Delete")
+                    Button(
+                        onClick = {
+                            onUpdate(
+                                entry.copy(
+                                    title = title,
+                                    email = email,
+                                    website = website,
+                                    password = password
+                                )
+                            )
+                            editMode = false
+                        }
+                    ) {
+                        Text("Save")
+                    }
+
+                } else {
+
+                    Button(
+                        onClick = onDelete
+                    ) {
+                        Text("Delete")
+                    }
+
+                    Button(
+                        onClick = {
+                            peekPassword = !peekPassword
+                        }
+                    ) {
+                        Text(
+                            if (peekPassword)
+                                "Hide"
+                            else
+                                "Peek"
+                        )
+                    }
                 }
             }
         }

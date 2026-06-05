@@ -15,7 +15,8 @@ data class VaultUiState(
     val accounts: List<AccountEntryModel> = emptyList(),
     val notes: List<NoteEntryModel> = emptyList(),
     val selectedNote: NoteEntryModel? = null,
-    val selectedAccount: AccountEntryModel? = null
+    val selectedAccount: AccountEntryModel? = null,
+    val accountBreachStatus: Map<AccountEntryModel, Boolean> = emptyMap()
 )
 
 class VaultViewModel : ViewModel() {
@@ -25,12 +26,14 @@ class VaultViewModel : ViewModel() {
 
     init {
         viewModelScope.launch {
+            val accounts = UseCasesProvider.getAccountsUseCase()
             _uiState.update {
                 it.copy(
-                    accounts = UseCasesProvider.getAccountsUseCase(),
+                    accounts = accounts,
                     notes = UseCasesProvider.getNotesUseCase()
                 )
             }
+            checkPasswords(accounts)
         }
     }
 
@@ -105,6 +108,21 @@ class VaultViewModel : ViewModel() {
                 }
             } else {
                 println(result.exceptionOrNull()?.message)
+            }
+        }
+    }
+
+    fun checkPasswords(accounts: List<AccountEntryModel>) {
+        accounts.forEach { account ->
+            viewModelScope.launch {
+                val result = UseCasesProvider.checkPasswordBreachUseCase(account.password)
+                if (result.isSuccess) {
+                    _uiState.update { state ->
+                        state.copy(
+                            accountBreachStatus = state.accountBreachStatus + (account to result.getOrDefault(false))
+                        )
+                    }
+                }
             }
         }
     }
