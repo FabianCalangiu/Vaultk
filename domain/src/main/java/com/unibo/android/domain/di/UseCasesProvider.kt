@@ -11,6 +11,8 @@ import com.unibo.android.domain.usecases.CreateNoteUseCaseImpl
 import com.unibo.android.domain.usecases.DeleteNoteUseCase
 import com.unibo.android.domain.usecases.DeleteNoteUseCaseImpl
 import com.unibo.android.domain.usecases.GetAccountsUseCase
+import com.unibo.android.domain.usecases.GetIconUseCase
+import com.unibo.android.domain.usecases.GetIconUseCaseImpl
 import com.unibo.android.domain.usecases.GetNotesUseCase
 import com.unibo.android.domain.usecases.GetNotesUseCaseImpl
 import com.unibo.android.domain.usecases.LoginUseCase
@@ -43,6 +45,8 @@ object UseCasesProvider {
     lateinit var updateNoteUseCase: UpdateNoteUseCase
     lateinit var checkPasswordBreachUseCase: CheckPasswordBreachUseCase
 
+    lateinit var getIconUseCase: GetIconUseCase
+
     fun setup(repositoryProvider: RepositoryProvider) {
         registerUseCase = RegisterUseCaseImpl(repositoryProvider.userRepository)
         loginUseCase = LoginUseCaseImpl(repositoryProvider.userRepository)
@@ -56,5 +60,6 @@ object UseCasesProvider {
         updateAccountUseCase = UpdateAccountUseCaseImpl(repositoryProvider.accountRepository, repositoryProvider.cryptoManager)
         updateNoteUseCase = UpdateNoteUseCaseImpl(repositoryProvider.noteRepository, repositoryProvider.cryptoManager)
         checkPasswordBreachUseCase = CheckPasswordBreachUseCaseImpl(repositoryProvider.dataBreachRepository)
+        getIconUseCase = GetIconUseCaseImpl(repositoryProvider.iconRepository)
     }
 }

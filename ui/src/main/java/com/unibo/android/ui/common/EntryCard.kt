@@ -17,14 +17,27 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import androidx.compose.ui.platform.LocalContext
+import coil.ImageLoader
+import coil.decode.SvgDecoder
 import com.unibo.android.ui.theme.Background
 
 @Composable
 fun EntryCard(
     title: String,
     onClick: () -> Unit,
-    isPassword: Boolean? = null
+    isPassword: Boolean? = null,
+    iconUrl: String? = null
 ) {
+    val context = LocalContext.current
+
+    val imageLoader = ImageLoader.Builder(context)
+        .components {
+            add(SvgDecoder.Factory())
+        }
+        .build()
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -39,6 +52,21 @@ fun EntryCard(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
+            if(iconUrl != null) {
+                AsyncImage(
+                    model = iconUrl,
+                    imageLoader = imageLoader,
+                    contentDescription = null,
+                    modifier = Modifier.size(32.dp).padding(8.dp),
+                    onSuccess = {
+                        println("SUCCESS")
+                    },
+                    onError = {
+                        println("ERROR")
+                    }
+                )
+            }
+
             Text(
                 text = title,
                 modifier = Modifier.padding(12.dp)

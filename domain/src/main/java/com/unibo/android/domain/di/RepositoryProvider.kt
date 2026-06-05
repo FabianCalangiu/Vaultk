@@ -2,6 +2,7 @@ package com.unibo.android.domain.di
 
 import com.unibo.android.domain.repositories.AccountRepository
 import com.unibo.android.domain.repositories.DataBreachRepository
+import com.unibo.android.domain.repositories.IconRepository
 import com.unibo.android.domain.repositories.NoteRepository
 import com.unibo.android.domain.repositories.SessionRepository
 import com.unibo.android.domain.repositories.UserRepository
@@ -15,4 +16,6 @@ interface RepositoryProvider {
 
     val cryptoManager: CryptoManager
     val dataBreachRepository: DataBreachRepository
+
+    val iconRepository: IconRepository
 }

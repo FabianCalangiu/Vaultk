@@ -51,7 +51,8 @@ fun VaultScreen(
                         onClick = {
                             viewModel.onSelectAccount(accountEntry)
                         },
-                        isPassword = uiState.accountBreachStatus[accountEntry]
+                        isPassword = uiState.accountBreachStatus[accountEntry],
+                        iconUrl = uiState.accountIcons[accountEntry]
                     )
                 }
                 AddEntryCard(

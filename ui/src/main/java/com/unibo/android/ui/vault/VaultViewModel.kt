@@ -16,7 +16,8 @@ data class VaultUiState(
     val notes: List<NoteEntryModel> = emptyList(),
     val selectedNote: NoteEntryModel? = null,
     val selectedAccount: AccountEntryModel? = null,
-    val accountBreachStatus: Map<AccountEntryModel, Boolean> = emptyMap()
+    val accountBreachStatus: Map<AccountEntryModel, Boolean> = emptyMap(),
+    val accountIcons: Map<AccountEntryModel, String> = emptyMap()
 )
 
 class VaultViewModel : ViewModel() {
@@ -34,6 +35,7 @@ class VaultViewModel : ViewModel() {
                 )
             }
             checkPasswords(accounts)
+            loadIcons(accounts)
         }
     }
 
@@ -122,6 +124,20 @@ class VaultViewModel : ViewModel() {
                             accountBreachStatus = state.accountBreachStatus + (account to result.getOrDefault(false))
                         )
                     }
+                }
+            }
+        }
+    }
+
+    fun loadIcons(accounts: List<AccountEntryModel>) {
+        accounts.forEach { account ->
+            viewModelScope.launch {
+                val iconUrl = UseCasesProvider.getIconUseCase(account.website)
+
+                _uiState.update { state ->
+                    state.copy(
+                        accountIcons = state.accountIcons + (account to iconUrl)
+                    )
                 }
             }
         }
