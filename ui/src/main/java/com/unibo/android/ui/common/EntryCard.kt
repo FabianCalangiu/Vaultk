@@ -12,10 +12,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.unibo.android.ui.theme.Background
 
 @Composable
 fun EntryCard(
@@ -28,6 +30,7 @@ fun EntryCard(
             .fillMaxWidth()
             .padding(8.dp)
             .clickable { onClick() },
+        colors = CardDefaults.cardColors(containerColor = Background)
     ) {
         Row(
             modifier = Modifier

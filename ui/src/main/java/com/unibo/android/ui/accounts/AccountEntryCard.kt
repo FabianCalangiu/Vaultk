@@ -1,7 +1,5 @@
 package com.unibo.android.ui.accounts
 
-import android.content.ClipData
-import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -25,7 +22,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -37,7 +33,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.unibo.android.domain.models.AccountEntryModel
 import com.unibo.android.ui.theme.Surface
-
 
 @Composable
 fun AccountEntryCard(
@@ -66,11 +61,16 @@ fun AccountEntryCard(
         mutableStateOf(entry.password)
     }
 
+    var peekPassword by rememberSaveable {
+        mutableStateOf(false)
+    }
+
     Card(
         colors = CardDefaults.cardColors(containerColor = Surface)
     ) {
         Column(
-            modifier = Modifier.padding(30.dp)
+            modifier = Modifier
+                .padding(30.dp)
                 .verticalScroll(scrollState)
         ) {
             if (editMode) {
@@ -141,7 +141,7 @@ fun AccountEntryCard(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = password,
+                        text = if (peekPassword) password else "*".repeat(password.length),
                         style = MaterialTheme.typography.bodyLarge,
                         maxLines = 5,
                         overflow = TextOverflow.Ellipsis,
@@ -166,7 +166,9 @@ fun AccountEntryCard(
             }
 
             Row(
-                modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Button(
@@ -205,6 +207,14 @@ fun AccountEntryCard(
                         onClick = onDelete
                     ) {
                         Text("Delete")
+                    }
+
+                    Button(
+                        onClick = {
+                            peekPassword = !peekPassword
+                        }
+                    ) {
+                        Text("Peek")
                     }
                 }
             }
