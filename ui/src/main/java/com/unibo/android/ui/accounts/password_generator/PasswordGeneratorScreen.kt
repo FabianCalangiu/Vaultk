@@ -20,6 +20,7 @@ import androidx.compose.runtime.setValue
 
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.unibo.android.domain.di.UseCasesProvider
 
 import com.unibo.android.domain.usecases.GeneratePasswordUseCase
@@ -27,7 +28,7 @@ import com.unibo.android.domain.usecases.GeneratePasswordUseCase
 import com.unibo.android.ui.common.Header
 
 @Composable
-fun PasswordGeneratorScreen() {
+fun PasswordGeneratorScreen(navController: NavController) {
     /**
      * Generated password state.
      */
@@ -164,7 +165,19 @@ fun PasswordGeneratorScreen() {
             /**
              * Confirm button.
              */
-            ConfirmPasswordButton()
+            ConfirmPasswordButton(
+                onConfirm = {
+
+                    navController.previousBackStackEntry
+                        ?.savedStateHandle
+                        ?.set(
+                            "generated_password",
+                            generatedPassword
+                        )
+
+                    navController.popBackStack()
+                }
+            )
         }
     }
 }

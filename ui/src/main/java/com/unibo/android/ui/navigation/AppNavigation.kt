@@ -64,7 +64,7 @@ fun AppNavigation() {
         }
 
         composable(Routes.PASSWORD_GENERATOR) {
-            PasswordGeneratorScreen()
+            PasswordGeneratorScreen(navController)
         }
     }
 }

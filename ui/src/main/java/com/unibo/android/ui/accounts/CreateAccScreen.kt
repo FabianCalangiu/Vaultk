@@ -35,6 +35,10 @@ fun CreateAccScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
+    val generatedPassword = navController.currentBackStackEntry
+        ?.savedStateHandle
+        ?.get<String>("generated_password")
+
     LaunchedEffect(Unit) {
         viewModel.events.collect { event ->
             when (event) {
@@ -42,6 +46,16 @@ fun CreateAccScreen(
                     navController.navigate(Routes.VAULT)
                 }
             }
+        }
+    }
+
+    LaunchedEffect(generatedPassword) {
+        generatedPassword?.let {
+            viewModel.onPasswordAccountChange(it)
+
+            navController.currentBackStackEntry
+                ?.savedStateHandle
+                ?.remove<String>("generated_password")
         }
     }
 
