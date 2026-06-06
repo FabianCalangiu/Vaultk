@@ -15,7 +15,8 @@ data class CreateAccUiState(
     val accountTitle: String = "",
     val emailAccount: String = "",
     val websiteAccount: String = "",
-    val passwordAccount: String = ""
+    val passwordAccount: String = "",
+    val errorMessage: String? = null
 )
 
 sealed interface CreateAccEvent {
@@ -66,7 +67,9 @@ class CreateAccViewModel : ViewModel() {
             if (result.isSuccess) {
                 _events.send(CreateAccEvent.NavigateToVault)
             } else {
-                println(result.exceptionOrNull()?.message)
+                _uiState.update {
+                    it.copy(errorMessage = "Empty fields are not allowed")
+                }
             }
         }
     }
