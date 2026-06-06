@@ -13,7 +13,8 @@ import kotlinx.coroutines.launch
 
 data class CreateNoteUiState(
     val noteTitle: String = "",
-    val noteText: String = ""
+    val noteText: String = "",
+    val errorMessage: String? = null
 )
 
 sealed interface CreateNoteEvent {
@@ -48,7 +49,9 @@ class CreateNoteViewModel : ViewModel() {
             if (result.isSuccess) {
                 _events.send(CreateNoteEvent.NavigateToVault)
             } else {
-                println(result.exceptionOrNull()?.message)
+                _uiState.update {
+                    it.copy(errorMessage = "Empty fields are not allowed")
+                }
             }
         }
     }

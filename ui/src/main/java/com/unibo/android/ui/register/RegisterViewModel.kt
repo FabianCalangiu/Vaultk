@@ -14,7 +14,8 @@ import kotlinx.coroutines.launch
 data class RegisterUiState(
     val email: String = "",
     val password: String = "",
-    val confirmPassword: String = ""
+    val confirmPassword: String = "",
+    val errorMessage: String? = null
 )
 
 sealed interface RegisterEvent {
@@ -60,10 +61,14 @@ class RegisterViewModel : ViewModel() {
                 if (sessionResult.isSuccess) {
                     _events.send(RegisterEvent.NavigateToVault)
                 } else {
-                    println(sessionResult.exceptionOrNull()?.message)
+                    _uiState.update {
+                        it.copy(errorMessage = "Session error")
+                    }
                 }
             } else {
-                println(registerResult.exceptionOrNull()?.message)
+                _uiState.update {
+                    it.copy(errorMessage = "Something went wrong, please retry...")
+                }
             }
         }
     }

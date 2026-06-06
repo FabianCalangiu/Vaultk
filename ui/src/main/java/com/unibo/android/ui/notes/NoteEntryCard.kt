@@ -93,6 +93,7 @@ fun NoteEntryCard(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)

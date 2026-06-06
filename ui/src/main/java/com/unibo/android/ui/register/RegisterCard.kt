@@ -1,5 +1,6 @@
 package com.unibo.android.ui.register
 
+import android.content.res.Resources
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.unibo.android.ui.theme.VaultkTheme
 import com.unibo.android.uicompose.navigation.Routes
 
 @Composable
@@ -115,6 +117,15 @@ fun RegisterCard(
                 modifier = Modifier
                     .fillMaxWidth()
             )
+
+            uiState.errorMessage?.let { error ->
+                Text(
+                    text = error,
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
 
             Button(
                 onClick = viewModel::onSubmit,
