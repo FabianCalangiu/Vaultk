@@ -132,11 +132,27 @@ class VaultViewModel : ViewModel() {
     fun loadIcons(accounts: List<AccountEntryModel>) {
         accounts.forEach { account ->
             viewModelScope.launch {
-                val iconUrl = UseCasesProvider.getIconUseCase(account.website)
+                try {
+                    if (account.website.isBlank()) {
+                        return@launch
+                    }
 
-                _uiState.update { state ->
-                    state.copy(
-                        accountIcons = state.accountIcons + (account to iconUrl)
+                    val iconUrl =
+                        UseCasesProvider.getIconUseCase(
+                            account.website
+                        )
+
+                    _uiState.update { state ->
+                        state.copy(
+                            accountIcons =
+                                state.accountIcons +
+                                        (account to iconUrl)
+                        )
+                    }
+
+                } catch (exception: Exception) {
+                    println(
+                        "Unable to load icon for ${account.website}"
                     )
                 }
             }
