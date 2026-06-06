@@ -9,7 +9,8 @@ private val VaultkColors = darkColorScheme(
     background = Background,
     surface = Surface,
     onBackground = TextPrimary,
-    onSurface = TextPrimary
+    onSurface = TextPrimary,
+    error = Error
 )
 
 @Composable

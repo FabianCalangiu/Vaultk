@@ -10,3 +10,4 @@ val Accent = Color(0xFFE3C96A)
 val TextPrimary = Color(0xFFFFFFFF)
 
 val TextSecondary = Color(0xFFB7B4CC)
+val Error = Color(0xFFFF0000)
