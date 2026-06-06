@@ -13,7 +13,8 @@ import kotlinx.coroutines.launch
 
 data class LoginUiState(
     val email: String = "",
-    val password: String = ""
+    val password: String = "",
+    val errorMessage: String? = null
 )
 
 sealed interface LoginEvent {
@@ -50,7 +51,9 @@ class LoginViewModel : ViewModel() {
             val resultSession = sessionUseCase(state.email, "login")
 
             if (resultLogin.isFailure || resultSession.isFailure) {
-                println("Something went wrong")
+                _uiState.update {
+                    it.copy(errorMessage = "Authentication failed, please retry...")
+                }
             } else {
                 _events.send(LoginEvent.NavigateToVault)
             }
