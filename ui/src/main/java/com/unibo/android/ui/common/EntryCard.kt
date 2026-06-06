@@ -52,12 +52,12 @@ fun EntryCard(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            if(iconUrl != null) {
+            if(!iconUrl.isNullOrEmpty()) {
                 AsyncImage(
                     model = iconUrl,
                     imageLoader = imageLoader,
                     contentDescription = null,
-                    modifier = Modifier.size(32.dp).padding(8.dp),
+                    modifier = Modifier.size(40.dp).padding(2.dp),
                     onSuccess = {
                         println("SUCCESS")
                     },
