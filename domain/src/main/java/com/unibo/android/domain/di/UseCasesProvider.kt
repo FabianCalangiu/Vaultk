@@ -10,6 +10,8 @@ import com.unibo.android.domain.usecases.CreateNoteUseCase
 import com.unibo.android.domain.usecases.CreateNoteUseCaseImpl
 import com.unibo.android.domain.usecases.DeleteNoteUseCase
 import com.unibo.android.domain.usecases.DeleteNoteUseCaseImpl
+import com.unibo.android.domain.usecases.GeneratePasswordUseCase
+import com.unibo.android.domain.usecases.GeneratePasswordUseCaseImpl
 import com.unibo.android.domain.usecases.GetAccountsUseCase
 import com.unibo.android.domain.usecases.GetIconUseCase
 import com.unibo.android.domain.usecases.GetIconUseCaseImpl
@@ -47,6 +49,8 @@ object UseCasesProvider {
 
     lateinit var getIconUseCase: GetIconUseCase
 
+    lateinit var generatePasswordUseCase: GeneratePasswordUseCase
+
     fun setup(repositoryProvider: RepositoryProvider) {
         registerUseCase = RegisterUseCaseImpl(repositoryProvider.userRepository)
         loginUseCase = LoginUseCaseImpl(repositoryProvider.userRepository)
@@ -61,5 +65,6 @@ object UseCasesProvider {
         updateNoteUseCase = UpdateNoteUseCaseImpl(repositoryProvider.noteRepository, repositoryProvider.cryptoManager)
         checkPasswordBreachUseCase = CheckPasswordBreachUseCaseImpl(repositoryProvider.dataBreachRepository)
         getIconUseCase = GetIconUseCaseImpl(repositoryProvider.iconRepository)
+        generatePasswordUseCase = GeneratePasswordUseCaseImpl()
     }
 }

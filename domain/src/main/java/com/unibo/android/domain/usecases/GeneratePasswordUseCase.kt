@@ -1,22 +1,39 @@
 package com.unibo.android.domain.usecases
 
-import android.health.connect.datatypes.units.Length
 import java.security.SecureRandom
 import kotlin.math.log2
 
-class GeneratePasswordUseCase {
-    private val secureRandom = SecureRandom()
-
+interface GeneratePasswordUseCase {
     operator fun invoke(
         length: Int,
         includeNumbers: Boolean,
         includeSpecialChars: Boolean,
         includeUppercase: Boolean,
         includeLowercase: Boolean
-    ): GeneratedPasswordResult {
-        require(length in 4..255) { "Password length must be between 4 and 255" }
+    ): Result<GeneratedPasswordResult>
+}
 
-        val lowercase = "abdcefghijklmnopqrstuvwxyz"
+class GeneratePasswordUseCaseImpl : GeneratePasswordUseCase {
+
+    private val secureRandom = SecureRandom()
+
+    override operator fun invoke(
+        length: Int,
+        includeNumbers: Boolean,
+        includeSpecialChars: Boolean,
+        includeUppercase: Boolean,
+        includeLowercase: Boolean
+    ): Result<GeneratedPasswordResult> {
+
+        if (length !in 4..255) {
+            return Result.failure(
+                IllegalArgumentException(
+                    "Password length must be between 4 and 255"
+                )
+            )
+        }
+
+        val lowercase = "abcdefghijklmnopqrstuvwxyz"
         val uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         val numbers = "0123456789"
         val specialChars = "!@#$%^&*"
@@ -28,7 +45,13 @@ class GeneratePasswordUseCase {
         if (includeNumbers) charsets.add(numbers)
         if (includeSpecialChars) charsets.add(specialChars)
 
-        require(charsets.isNotEmpty()) { "At least one character set must be selected" }
+        if (charsets.isEmpty()) {
+            return Result.failure(
+                IllegalArgumentException(
+                    "Select at least one character set"
+                )
+            )
+        }
 
         val allAllowedChars = charsets.joinToString("")
         val passwordChars = mutableListOf<Char>()
@@ -38,7 +61,9 @@ class GeneratePasswordUseCase {
         }
 
         repeat(length - passwordChars.size) {
-            passwordChars.add(allAllowedChars.randomChar())
+            passwordChars.add(
+                allAllowedChars.randomChar()
+            )
         }
 
         passwordChars.shuffleSecurely()
@@ -50,18 +75,23 @@ class GeneratePasswordUseCase {
             length = length
         )
 
-        return GeneratedPasswordResult(
-            password = password,
-            entropyBits = entropyBits
+        return Result.success(
+            GeneratedPasswordResult(
+                password = password,
+                entropyBits = entropyBits
+            )
         )
     }
 
     private fun String.randomChar(): Char {
-        return this[secureRandom.nextInt(this.length)]
+        return this[
+            secureRandom.nextInt(this.length)
+        ]
     }
 
     private fun MutableList<Char>.shuffleSecurely() {
-        for(i in lastIndex downTo 1) {
+        for (i in lastIndex downTo 1) {
+
             val j = secureRandom.nextInt(i + 1)
 
             val temp = this[i]
@@ -74,7 +104,9 @@ class GeneratePasswordUseCase {
         charsetSize: Int,
         length: Int
     ): Double {
-        return length * log2(charsetSize.toDouble())
+        return length * log2(
+            charsetSize.toDouble()
+        )
     }
 }
 

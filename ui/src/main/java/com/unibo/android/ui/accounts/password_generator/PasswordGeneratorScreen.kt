@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 
 import androidx.compose.material3.MaterialTheme
 
@@ -18,6 +20,7 @@ import androidx.compose.runtime.setValue
 
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.unibo.android.domain.di.UseCasesProvider
 
 import com.unibo.android.domain.usecases.GeneratePasswordUseCase
 
@@ -25,19 +28,11 @@ import com.unibo.android.ui.common.Header
 
 @Composable
 fun PasswordGeneratorScreen() {
-
-    /**
-     * Password generation use case.
-     */
-    val generatePasswordUseCase = remember {
-        GeneratePasswordUseCase()
-    }
-
     /**
      * Generated password state.
      */
     var generatedPassword by remember {
-        mutableStateOf("Click generate")
+        mutableStateOf("")
     }
 
     /**
@@ -73,6 +68,8 @@ fun PasswordGeneratorScreen() {
         mutableStateOf(true)
     }
 
+    val scrollState = rememberScrollState()
+
     /**
      * Main screen container.
      */
@@ -80,6 +77,9 @@ fun PasswordGeneratorScreen() {
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
+            .verticalScroll(scrollState),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+
     ) {
 
         /**
@@ -100,32 +100,28 @@ fun PasswordGeneratorScreen() {
              * Generated password display card.
              */
             GeneratedPasswordCard(
-
                 password = generatedPassword,
-
                 entropyBits = entropyBits,
-
                 onGenerateClick = {
 
-                    val result = generatePasswordUseCase(
+                    val result = UseCasesProvider.generatePasswordUseCase(
 
                         length = passwordLength.toInt(),
-
                         includeNumbers = includeNumbers,
-
                         includeSpecialChars = includeSpecialChars,
-
                         includeUppercase = includeUppercase,
-
                         includeLowercase = includeLowercase
                     )
 
-                    /**
-                     * Update UI state.
-                     */
-                    generatedPassword = result.password
+                    if (result.isSuccess) {
+                        val generated = result.getOrThrow()
 
-                    entropyBits = result.entropyBits
+                        generatedPassword = generated.password
+                        entropyBits = generated.entropyBits
+                    } else {
+                        generatedPassword = result.exceptionOrNull()?.message ?: "Unable to generate password"
+                        entropyBits = 0.0
+                    }
                 }
             )
 
