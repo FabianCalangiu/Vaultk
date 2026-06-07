@@ -42,6 +42,7 @@ dependencies {
     //Moshi
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
+    implementation("androidx.work:work-runtime-ktx:2.10.2")
     ksp(libs.moshi.codegen)
 
 
