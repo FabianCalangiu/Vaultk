@@ -37,7 +37,11 @@ fun CreateNoteScreen(
         viewModel.events.collect { event ->
             when (event) {
                 CreateNoteEvent.NavigateToVault -> {
-                    navController.navigate(Routes.VAULT)
+                    navController.navigate(Routes.VAULT) {
+                        popUpTo(Routes.INSERT_NOTES) {
+                            inclusive = true
+                        }
+                    }
                 }
             }
         }
