@@ -158,4 +158,19 @@ class VaultViewModel : ViewModel() {
             }
         }
     }
+
+    fun loadData() {
+        viewModelScope.launch {
+            val accounts = UseCasesProvider.getAccountsUseCase()
+            val notes = UseCasesProvider.getNotesUseCase()
+            _uiState.update {
+                it.copy(
+                    accounts = accounts,
+                    notes = notes
+                )
+            }
+            checkPasswords(accounts)
+            loadIcons(accounts)
+        }
+    }
 }

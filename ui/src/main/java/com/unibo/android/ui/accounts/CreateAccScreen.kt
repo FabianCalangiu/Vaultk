@@ -57,7 +57,11 @@ fun CreateAccScreen(
         viewModel.events.collect { event ->
             when (event) {
                 CreateAccEvent.NavigateToVault -> {
-                    navController.navigate(Routes.VAULT)
+                    navController.navigate(Routes.VAULT) {
+                        popUpTo(Routes.INSERT_ACCOUNTS) {
+                            inclusive = true
+                        }
+                    }
                 }
             }
         }
