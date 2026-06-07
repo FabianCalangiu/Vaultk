@@ -25,5 +25,5 @@ data class AccountEntryEntity(
     val website: String = "",
     val password: String,
     //Foreign Key
-    val userId: Long
+    val userId: Long?
 )

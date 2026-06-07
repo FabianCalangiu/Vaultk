@@ -15,7 +15,7 @@ interface UserDao {
     suspend fun deleteUser(user: UserEntity)
 
     @Query("SELECT id FROM users WHERE email = :email LIMIT 1")
-    suspend fun getUserId(email: String): Long
+    suspend fun getUserId(email: String): Long?
 
     @Query("SELECT password FROM users WHERE email = :email LIMIT 1")
     suspend fun getUserPasswordByEmail(email: String): String?

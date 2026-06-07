@@ -17,7 +17,7 @@ class UserRepositoryImpl(context: Context) : UserRepository {
         userDao.deleteUser(UserEntity(user.id, user.email, user.password))
     }
 
-    override suspend fun getUserId(email: String): Long {
+    override suspend fun getUserId(email: String): Long? {
         return userDao.getUserId(email)
     }
 

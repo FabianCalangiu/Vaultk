@@ -23,11 +23,12 @@ class CryptoManagerImpl : CryptoManager {
 
         val existingKey = keystore.getKey(keyAlias, null)
 
-        if(existingKey != null) {
+        if (existingKey != null) {
             return existingKey as SecretKey
         }
 
-        val keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, androidKeyStore)
+        val keyGenerator =
+            KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, androidKeyStore)
 
         val keySpec = KeyGenParameterSpec.Builder(
             keyAlias,
@@ -61,18 +62,27 @@ class CryptoManagerImpl : CryptoManager {
     }
 
     override fun decrypt(encryptedText: String): String {
-        val combined = Base64.decode(encryptedText, Base64.NO_WRAP)
+        return try {
+            val combined = Base64.decode(encryptedText, Base64.NO_WRAP)
 
-        val iv = combined.copyOfRange(0, 12)
+            require(combined.size > 12)
 
-        val encryptedBytes = combined.copyOfRange(12, combined.size)
+            val iv = combined.copyOfRange(0, 12)
+            val encryptedBytes = combined.copyOfRange(12, combined.size)
 
-        val cipher = Cipher.getInstance(transformation)
+            val cipher = Cipher.getInstance(transformation)
 
-        cipher.init(Cipher.DECRYPT_MODE, getOrCreateSecretKey(), GCMParameterSpec(128, iv))
+            cipher.init(
+                Cipher.DECRYPT_MODE,
+                getOrCreateSecretKey(),
+                GCMParameterSpec(128, iv)
+            )
 
-        val decryptedBytes = cipher.doFinal(encryptedBytes)
+            cipher.doFinal(encryptedBytes)
+                .toString(Charsets.UTF_8)
 
-        return decryptedBytes.toString(Charsets.UTF_8)
+        } catch (e: Exception) {
+            throw SecurityException("Unable to decrypt data", e)
+        }
     }
 }

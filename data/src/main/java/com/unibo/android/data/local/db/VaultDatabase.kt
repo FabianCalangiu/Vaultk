@@ -17,7 +17,7 @@ import com.unibo.android.data.local.entity.UserEntity
         NoteEntryEntity::class,
         UserEntity::class
     ],
-    version = 2
+    version = 3
 )
 abstract class VaultDatabase : RoomDatabase() {
     abstract fun accountEntryDao(): AccountEntryDao

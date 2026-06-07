@@ -26,13 +26,12 @@ class CreateAccountUseCaseImpl(
         website: String,
         password: String
     ): Result<Unit> {
-        val NULL: Long = 0
 
         val encryptedPassword = cryptoManager.encrypt(password)
 
         try {
             val userId = sessionRepository.getUserId().first()
-            if (userId == NULL) {
+            if (userId == null) {
                 return Result.failure(Exception("User not logged in"))
             }
 

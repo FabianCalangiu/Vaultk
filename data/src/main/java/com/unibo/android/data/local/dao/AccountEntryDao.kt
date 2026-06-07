@@ -18,6 +18,6 @@ interface AccountEntryDao {
     @Update
     suspend fun updateEntry(entry: AccountEntryEntity)
 
-    @Query("SELECT * FROM account_entries WHERE userId = :userId")
+    @Query("SELECT * FROM account_entries WHERE userId = :userId ORDER BY title COLLATE NOCASE")
     suspend fun getAllEntries(userId: Long): List<AccountEntryEntity>
 }

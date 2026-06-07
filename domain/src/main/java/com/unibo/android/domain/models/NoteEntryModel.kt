@@ -4,5 +4,5 @@ data class NoteEntryModel (
     val id: Long,
     val title: String,
     val content: String,
-    val userId: Long
+    val userId: Long?
 )

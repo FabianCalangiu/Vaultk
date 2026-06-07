@@ -22,5 +22,5 @@ data class NoteEntryEntity (
     val id: Long = 0,
     val title: String,
     val content: String,
-    val userId: Long
+    val userId: Long?
 )

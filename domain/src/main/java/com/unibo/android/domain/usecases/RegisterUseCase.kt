@@ -52,7 +52,7 @@ class RegisterUseCaseImpl(
 
             val existingUserId = userRepository.getUserId(email)
 
-            if (existingUserId != NULL) {
+            if (existingUserId != null) {
                 return Result.failure(Exception("User already exists"))
             }
 

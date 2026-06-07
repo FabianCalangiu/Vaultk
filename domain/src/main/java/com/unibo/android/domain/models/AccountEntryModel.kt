@@ -6,5 +6,5 @@ data class AccountEntryModel (
     val email: String,
     val website: String,
     val password: String,
-    val userId: Long
+    val userId: Long?
 )

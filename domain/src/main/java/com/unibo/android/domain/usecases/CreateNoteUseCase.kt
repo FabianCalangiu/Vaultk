@@ -22,13 +22,12 @@ class CreateNoteUseCaseImpl (
         title: String,
         content: String
     ): Result<Unit> {
-        val NULL: Long = 0
 
         val encryptedContent = cryptoManager.encrypt(content)
 
         return try {
             val userId = sessionRepository.getUserId().first()
-            if(userId == NULL) {
+            if(userId == null) {
                 return Result.failure(Exception("note id does not exist"))
             }
 
