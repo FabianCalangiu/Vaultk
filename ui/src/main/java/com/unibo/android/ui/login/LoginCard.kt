@@ -39,7 +39,7 @@ fun LoginCard(
             when (event) {
                 LoginEvent.NavigateToVault -> {
                     navController.navigate(Routes.VAULT) {
-                        popUpTo(Routes.FORM_REGISTER) {
+                        popUpTo(Routes.FORM_LOGIN) {
                             inclusive = true
                         }
                     }
